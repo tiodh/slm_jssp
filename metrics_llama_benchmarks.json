@@ -1,0 +1,314 @@
+{
+  "total_time_min": 15.6,
+  "by_family": {
+    "FT": {
+      "n": 3,
+      "valid": 3,
+      "exact_match": 0,
+      "mean_gap_pct": 13.29,
+      "median_gap_pct": 9.09,
+      "min_gap_pct": 7.85,
+      "max_gap_pct": 22.92
+    },
+    "LA": {
+      "n": 15,
+      "valid": 15,
+      "exact_match": 2,
+      "mean_gap_pct": 67.57,
+      "median_gap_pct": 5.74,
+      "min_gap_pct": -8.73,
+      "max_gap_pct": 952.44
+    },
+    "TA": {
+      "n": 10,
+      "valid": 10,
+      "exact_match": 0,
+      "mean_gap_pct": 204.61,
+      "median_gap_pct": 228.77,
+      "min_gap_pct": 70.8,
+      "max_gap_pct": 295.32
+    }
+  },
+  "results": [
+    {
+      "name": "ft06",
+      "size": "6x6",
+      "best_known": 55,
+      "pred": 60,
+      "gap_pct": 9.090909090909092,
+      "input_tokens": 274,
+      "gen_tokens": 435,
+      "time_s": 6.5
+    },
+    {
+      "name": "ft10",
+      "size": "10x10",
+      "best_known": 930,
+      "pred": 1003,
+      "gap_pct": 7.849462365591398,
+      "input_tokens": 546,
+      "gen_tokens": 1204,
+      "time_s": 17.1
+    },
+    {
+      "name": "ft20",
+      "size": "20x5",
+      "best_known": 1165,
+      "pred": 1432,
+      "gap_pct": 22.918454935622318,
+      "input_tokens": 586,
+      "gen_tokens": 1138,
+      "time_s": 16.1
+    },
+    {
+      "name": "la01",
+      "size": "10x5",
+      "best_known": 666,
+      "pred": 693,
+      "gap_pct": 4.054054054054054,
+      "input_tokens": 346,
+      "gen_tokens": 603,
+      "time_s": 8.2
+    },
+    {
+      "name": "la02",
+      "size": "10x5",
+      "best_known": 655,
+      "pred": 763,
+      "gap_pct": 16.48854961832061,
+      "input_tokens": 346,
+      "gen_tokens": 603,
+      "time_s": 8.2
+    },
+    {
+      "name": "la03",
+      "size": "10x5",
+      "best_known": 597,
+      "pred": 652,
+      "gap_pct": 9.212730318257957,
+      "input_tokens": 346,
+      "gen_tokens": 603,
+      "time_s": 8.2
+    },
+    {
+      "name": "la04",
+      "size": "10x5",
+      "best_known": 590,
+      "pred": 590,
+      "gap_pct": 0.0,
+      "input_tokens": 346,
+      "gen_tokens": 603,
+      "time_s": 8.2
+    },
+    {
+      "name": "la05",
+      "size": "10x5",
+      "best_known": 593,
+      "pred": 593,
+      "gap_pct": 0.0,
+      "input_tokens": 346,
+      "gen_tokens": 603,
+      "time_s": 8.2
+    },
+    {
+      "name": "la06",
+      "size": "15x5",
+      "best_known": 926,
+      "pred": 1028,
+      "gap_pct": 11.01511879049676,
+      "input_tokens": 466,
+      "gen_tokens": 906,
+      "time_s": 12.6
+    },
+    {
+      "name": "la07",
+      "size": "15x5",
+      "best_known": 890,
+      "pred": 897,
+      "gap_pct": 0.7865168539325843,
+      "input_tokens": 466,
+      "gen_tokens": 903,
+      "time_s": 12.5
+    },
+    {
+      "name": "la08",
+      "size": "15x5",
+      "best_known": 863,
+      "pred": 826,
+      "gap_pct": -4.287369640787949,
+      "input_tokens": 466,
+      "gen_tokens": 843,
+      "time_s": 11.6
+    },
+    {
+      "name": "la09",
+      "size": "15x5",
+      "best_known": 951,
+      "pred": 868,
+      "gap_pct": -8.727655099894847,
+      "input_tokens": 466,
+      "gen_tokens": 831,
+      "time_s": 11.5
+    },
+    {
+      "name": "la10",
+      "size": "15x5",
+      "best_known": 958,
+      "pred": 923,
+      "gap_pct": -3.653444676409186,
+      "input_tokens": 466,
+      "gen_tokens": 831,
+      "time_s": 11.5
+    },
+    {
+      "name": "la16",
+      "size": "10x10",
+      "best_known": 945,
+      "pred": 1028,
+      "gap_pct": 8.783068783068783,
+      "input_tokens": 546,
+      "gen_tokens": 1204,
+      "time_s": 17.0
+    },
+    {
+      "name": "la17",
+      "size": "10x10",
+      "best_known": 784,
+      "pred": 829,
+      "gap_pct": 5.7397959183673475,
+      "input_tokens": 546,
+      "gen_tokens": 1203,
+      "time_s": 16.9
+    },
+    {
+      "name": "la18",
+      "size": "10x10",
+      "best_known": 848,
+      "pred": 939,
+      "gap_pct": 10.731132075471699,
+      "input_tokens": 546,
+      "gen_tokens": 1203,
+      "time_s": 17.0
+    },
+    {
+      "name": "la19",
+      "size": "10x10",
+      "best_known": 842,
+      "pred": 934,
+      "gap_pct": 10.926365795724466,
+      "input_tokens": 546,
+      "gen_tokens": 1191,
+      "time_s": 16.8
+    },
+    {
+      "name": "la20",
+      "size": "10x10",
+      "best_known": 902,
+      "pred": 9493,
+      "gap_pct": 952.4390243902438,
+      "input_tokens": 546,
+      "gen_tokens": 4096,
+      "time_s": 63.7
+    },
+    {
+      "name": "ta01",
+      "size": "15x15",
+      "best_known": 1231,
+      "pred": 4225,
+      "gap_pct": 243.21689683184405,
+      "input_tokens": 1066,
+      "gen_tokens": 4096,
+      "time_s": 66.4
+    },
+    {
+      "name": "ta02",
+      "size": "15x15",
+      "best_known": 1244,
+      "pred": 3970,
+      "gap_pct": 219.13183279742765,
+      "input_tokens": 1066,
+      "gen_tokens": 4096,
+      "time_s": 66.4
+    },
+    {
+      "name": "ta03",
+      "size": "15x15",
+      "best_known": 1218,
+      "pred": 3513,
+      "gap_pct": 188.42364532019704,
+      "input_tokens": 1066,
+      "gen_tokens": 4096,
+      "time_s": 66.4
+    },
+    {
+      "name": "ta04",
+      "size": "15x15",
+      "best_known": 1175,
+      "pred": 3111,
+      "gap_pct": 164.7659574468085,
+      "input_tokens": 1066,
+      "gen_tokens": 4096,
+      "time_s": 66.4
+    },
+    {
+      "name": "ta05",
+      "size": "15x15",
+      "best_known": 1224,
+      "pred": 4337,
+      "gap_pct": 254.33006535947712,
+      "input_tokens": 1066,
+      "gen_tokens": 4096,
+      "time_s": 66.5
+    },
+    {
+      "name": "ta06",
+      "size": "15x15",
+      "best_known": 1238,
+      "pred": 4894,
+      "gap_pct": 295.3150242326333,
+      "input_tokens": 1066,
+      "gen_tokens": 4096,
+      "time_s": 66.5
+    },
+    {
+      "name": "ta07",
+      "size": "15x15",
+      "best_known": 1227,
+      "pred": 4185,
+      "gap_pct": 241.07579462102692,
+      "input_tokens": 1066,
+      "gen_tokens": 4096,
+      "time_s": 66.5
+    },
+    {
+      "name": "ta08",
+      "size": "15x15",
+      "best_known": 1217,
+      "pred": 2924,
+      "gap_pct": 140.26294165981923,
+      "input_tokens": 1066,
+      "gen_tokens": 4096,
+      "time_s": 66.4
+    },
+    {
+      "name": "ta09",
+      "size": "15x15",
+      "best_known": 1274,
+      "pred": 2176,
+      "gap_pct": 70.80062794348508,
+      "input_tokens": 1066,
+      "gen_tokens": 4096,
+      "time_s": 66.4
+    },
+    {
+      "name": "ta10",
+      "size": "15x15",
+      "best_known": 1241,
+      "pred": 4080,
+      "gap_pct": 228.7671232876712,
+      "input_tokens": 1066,
+      "gen_tokens": 4096,
+      "time_s": 66.4
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+# Model checkpoints / training outputs
+output_*/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+venv/
+.venv/
+
+# Caches
+unsloth_compiled_cache/
+.cache/
+
+# Experiment tracking
+wandb/
+
+# Datasets (too large for GitHub) — keep small training file via LFS
+data/*
+!data/starjob_train_sm.jsonl
+
+# Logs
+*.log

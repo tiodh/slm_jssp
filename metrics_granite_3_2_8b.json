@@ -1,0 +1,418 @@
+{
+  "model_name": "granite_3_2_8b",
+  "overall": {
+    "n": 50,
+    "exact_match": {
+      "count": 13,
+      "pct": 26.0
+    },
+    "gap_le_5pct": {
+      "count": 20,
+      "pct": 40.0
+    },
+    "gap_le_10pct": {
+      "count": 29,
+      "pct": 58.0
+    },
+    "gap_le_20pct": {
+      "count": 36,
+      "pct": 72.0
+    },
+    "gap_gt_50pct": {
+      "count": 12,
+      "pct": 24.0
+    },
+    "mean_gap_pct": 186.1,
+    "median_gap_pct": 6.2,
+    "min_gap_pct": 0.0,
+    "max_gap_pct": 5235.1,
+    "mae": 3283.7,
+    "mean_signed_error": 3283.7,
+    "pred_le_true": {
+      "count": 13,
+      "pct": 26.0
+    },
+    "infeasible_pred_lt_true": {
+      "count": 0,
+      "pct": 0.0
+    },
+    "feasibility_rate": {
+      "valid": 50,
+      "total": 50,
+      "pct": 100.0
+    },
+    "eval_loss": 0.3356,
+    "train_loss_avg": 0.053
+  },
+  "by_group": {
+    "small": {
+      "n": 9,
+      "exact_match": {
+        "count": 5,
+        "pct": 55.6
+      },
+      "gap_le_5pct": {
+        "count": 7,
+        "pct": 77.8
+      },
+      "gap_le_10pct": {
+        "count": 9,
+        "pct": 100.0
+      },
+      "gap_le_20pct": {
+        "count": 9,
+        "pct": 100.0
+      },
+      "gap_gt_50pct": {
+        "count": 0,
+        "pct": 0.0
+      },
+      "mean_gap_pct": 1.79,
+      "median_gap_pct": 0.0,
+      "min_gap_pct": 0.0,
+      "max_gap_pct": 6.2,
+      "mae": 11.2,
+      "mean_signed_error": 11.2,
+      "pred_le_true": {
+        "count": 5,
+        "pct": 55.6
+      },
+      "infeasible_pred_lt_true": {
+        "count": 0,
+        "pct": 0.0
+      }
+    },
+    "medium": {
+      "n": 29,
+      "exact_match": {
+        "count": 8,
+        "pct": 27.6
+      },
+      "gap_le_5pct": {
+        "count": 13,
+        "pct": 44.8
+      },
+      "gap_le_10pct": {
+        "count": 20,
+        "pct": 69.0
+      },
+      "gap_le_20pct": {
+        "count": 26,
+        "pct": 89.7
+      },
+      "gap_gt_50pct": {
+        "count": 2,
+        "pct": 6.9
+      },
+      "mean_gap_pct": 195.79,
+      "median_gap_pct": 5.8,
+      "min_gap_pct": 0.0,
+      "max_gap_pct": 5235.1,
+      "mae": 2512.7,
+      "mean_signed_error": 2512.7,
+      "pred_le_true": {
+        "count": 8,
+        "pct": 27.6
+      },
+      "infeasible_pred_lt_true": {
+        "count": 0,
+        "pct": 0.0
+      }
+    },
+    "large": {
+      "n": 12,
+      "exact_match": {
+        "count": 0,
+        "pct": 0.0
+      },
+      "gap_le_5pct": {
+        "count": 0,
+        "pct": 0.0
+      },
+      "gap_le_10pct": {
+        "count": 0,
+        "pct": 0.0
+      },
+      "gap_le_20pct": {
+        "count": 1,
+        "pct": 8.3
+      },
+      "gap_gt_50pct": {
+        "count": 10,
+        "pct": 83.3
+      },
+      "mean_gap_pct": 300.9,
+      "median_gap_pct": 192.75,
+      "min_gap_pct": 10.5,
+      "max_gap_pct": 1276.1,
+      "mae": 7601.2,
+      "mean_signed_error": 7601.2,
+      "pred_le_true": {
+        "count": 0,
+        "pct": 0.0
+      },
+      "infeasible_pred_lt_true": {
+        "count": 0,
+        "pct": 0.0
+      }
+    }
+  },
+  "by_size": [
+    {
+      "size": "2x2",
+      "n": 1,
+      "mean_gap_pct": 0.0,
+      "min_gap_pct": 0.0,
+      "max_gap_pct": 0.0,
+      "exact_match": 1
+    },
+    {
+      "size": "3x2",
+      "n": 1,
+      "mean_gap_pct": 0.0,
+      "min_gap_pct": 0.0,
+      "max_gap_pct": 0.0,
+      "exact_match": 1
+    },
+    {
+      "size": "4x2",
+      "n": 2,
+      "mean_gap_pct": 2.55,
+      "min_gap_pct": 0.0,
+      "max_gap_pct": 5.1,
+      "exact_match": 1
+    },
+    {
+      "size": "4x3",
+      "n": 1,
+      "mean_gap_pct": 0.0,
+      "min_gap_pct": 0.0,
+      "max_gap_pct": 0.0,
+      "exact_match": 1
+    },
+    {
+      "size": "5x3",
+      "n": 1,
+      "mean_gap_pct": 4.3,
+      "min_gap_pct": 4.3,
+      "max_gap_pct": 4.3,
+      "exact_match": 0
+    },
+    {
+      "size": "5x4",
+      "n": 1,
+      "mean_gap_pct": 6.2,
+      "min_gap_pct": 6.2,
+      "max_gap_pct": 6.2,
+      "exact_match": 0
+    },
+    {
+      "size": "5x5",
+      "n": 2,
+      "mean_gap_pct": 0.25,
+      "min_gap_pct": 0.0,
+      "max_gap_pct": 0.5,
+      "exact_match": 1
+    },
+    {
+      "size": "6x3",
+      "n": 1,
+      "mean_gap_pct": 0.0,
+      "min_gap_pct": 0.0,
+      "max_gap_pct": 0.0,
+      "exact_match": 1
+    },
+    {
+      "size": "6x5",
+      "n": 1,
+      "mean_gap_pct": 11.9,
+      "min_gap_pct": 11.9,
+      "max_gap_pct": 11.9,
+      "exact_match": 0
+    },
+    {
+      "size": "6x6",
+      "n": 2,
+      "mean_gap_pct": 5.7,
+      "min_gap_pct": 2.5,
+      "max_gap_pct": 8.9,
+      "exact_match": 0
+    },
+    {
+      "size": "7x3",
+      "n": 1,
+      "mean_gap_pct": 0.0,
+      "min_gap_pct": 0.0,
+      "max_gap_pct": 0.0,
+      "exact_match": 1
+    },
+    {
+      "size": "7x4",
+      "n": 1,
+      "mean_gap_pct": 0.0,
+      "min_gap_pct": 0.0,
+      "max_gap_pct": 0.0,
+      "exact_match": 1
+    },
+    {
+      "size": "7x5",
+      "n": 2,
+      "mean_gap_pct": 8.25,
+      "min_gap_pct": 0.0,
+      "max_gap_pct": 16.5,
+      "exact_match": 1
+    },
+    {
+      "size": "7x6",
+      "n": 1,
+      "mean_gap_pct": 6.0,
+      "min_gap_pct": 6.0,
+      "max_gap_pct": 6.0,
+      "exact_match": 0
+    },
+    {
+      "size": "7x7",
+      "n": 1,
+      "mean_gap_pct": 4.5,
+      "min_gap_pct": 4.5,
+      "max_gap_pct": 4.5,
+      "exact_match": 0
+    },
+    {
+      "size": "8x2",
+      "n": 1,
+      "mean_gap_pct": 5.8,
+      "min_gap_pct": 5.8,
+      "max_gap_pct": 5.8,
+      "exact_match": 0
+    },
+    {
+      "size": "8x4",
+      "n": 1,
+      "mean_gap_pct": 16.7,
+      "min_gap_pct": 16.7,
+      "max_gap_pct": 16.7,
+      "exact_match": 0
+    },
+    {
+      "size": "8x5",
+      "n": 3,
+      "mean_gap_pct": 10.5,
+      "min_gap_pct": 5.5,
+      "max_gap_pct": 19.7,
+      "exact_match": 0
+    },
+    {
+      "size": "8x7",
+      "n": 1,
+      "mean_gap_pct": 15.4,
+      "min_gap_pct": 15.4,
+      "max_gap_pct": 15.4,
+      "exact_match": 0
+    },
+    {
+      "size": "9x3",
+      "n": 1,
+      "mean_gap_pct": 0.0,
+      "min_gap_pct": 0.0,
+      "max_gap_pct": 0.0,
+      "exact_match": 1
+    },
+    {
+      "size": "9x4",
+      "n": 1,
+      "mean_gap_pct": 1.6,
+      "min_gap_pct": 1.6,
+      "max_gap_pct": 1.6,
+      "exact_match": 0
+    },
+    {
+      "size": "9x5",
+      "n": 1,
+      "mean_gap_pct": 4.2,
+      "min_gap_pct": 4.2,
+      "max_gap_pct": 4.2,
+      "exact_match": 0
+    },
+    {
+      "size": "9x6",
+      "n": 1,
+      "mean_gap_pct": 11.4,
+      "min_gap_pct": 11.4,
+      "max_gap_pct": 11.4,
+      "exact_match": 0
+    },
+    {
+      "size": "9x8",
+      "n": 1,
+      "mean_gap_pct": 9.0,
+      "min_gap_pct": 9.0,
+      "max_gap_pct": 9.0,
+      "exact_match": 0
+    },
+    {
+      "size": "9x9",
+      "n": 2,
+      "mean_gap_pct": 2628.45,
+      "min_gap_pct": 21.8,
+      "max_gap_pct": 5235.1,
+      "exact_match": 0
+    },
+    {
+      "size": "10x2",
+      "n": 3,
+      "mean_gap_pct": 2.07,
+      "min_gap_pct": 0.0,
+      "max_gap_pct": 6.2,
+      "exact_match": 2
+    },
+    {
+      "size": "10x5",
+      "n": 2,
+      "mean_gap_pct": 0.75,
+      "min_gap_pct": 0.0,
+      "max_gap_pct": 1.5,
+      "exact_match": 1
+    },
+    {
+      "size": "10x9",
+      "n": 1,
+      "mean_gap_pct": 267.4,
+      "min_gap_pct": 267.4,
+      "max_gap_pct": 267.4,
+      "exact_match": 0
+    },
+    {
+      "size": "12x12",
+      "n": 3,
+      "mean_gap_pct": 634.93,
+      "min_gap_pct": 145.9,
+      "max_gap_pct": 1276.1,
+      "exact_match": 0
+    },
+    {
+      "size": "15x10",
+      "n": 4,
+      "mean_gap_pct": 236.22,
+      "min_gap_pct": 44.3,
+      "max_gap_pct": 439.0,
+      "exact_match": 0
+    },
+    {
+      "size": "15x15",
+      "n": 1,
+      "mean_gap_pct": 239.6,
+      "min_gap_pct": 239.6,
+      "max_gap_pct": 239.6,
+      "exact_match": 0
+    },
+    {
+      "size": "20x15",
+      "n": 4,
+      "mean_gap_pct": 130.38,
+      "min_gap_pct": 10.5,
+      "max_gap_pct": 261.4,
+      "exact_match": 0
+    }
+  ]
+}
