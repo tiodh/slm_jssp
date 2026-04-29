@@ -75,6 +75,29 @@ Side-by-side training and evaluation loss for all 4 models × 2 methods (solid =
 
 Bold = winner per (model, metric). Full structured numbers: [`comparison_lora_vs_rslora.json`](comparison_lora_vs_rslora.json).
 
+### Model Weights
+
+All 8 adapters (~321–402 MB each) are published on Hugging Face. Load with `peft.PeftModel.from_pretrained(base, repo_id)`.
+
+| Base model | LoRA | rsLoRA |
+|---|---|---|
+| Llama-3.1-8B-Instruct  | [`tiodh/llama3.1-8b-jssp-lora`](https://huggingface.co/tiodh/llama3.1-8b-jssp-lora)   | [`tiodh/llama3.1-8b-jssp-rslora`](https://huggingface.co/tiodh/llama3.1-8b-jssp-rslora) |
+| Granite-3.2-8B-Instruct | [`tiodh/granite3.2-8b-jssp-lora`](https://huggingface.co/tiodh/granite3.2-8b-jssp-lora) | [`tiodh/granite3.2-8b-jssp-rslora`](https://huggingface.co/tiodh/granite3.2-8b-jssp-rslora) |
+| Ministral-8B-Instruct-2410 | [`tiodh/ministral-8b-jssp-lora`](https://huggingface.co/tiodh/ministral-8b-jssp-lora) | [`tiodh/ministral-8b-jssp-rslora`](https://huggingface.co/tiodh/ministral-8b-jssp-rslora) |
+| Qwen2-7B-Instruct | [`tiodh/qwen2-7b-jssp-lora`](https://huggingface.co/tiodh/qwen2-7b-jssp-lora) | [`tiodh/qwen2-7b-jssp-rslora`](https://huggingface.co/tiodh/qwen2-7b-jssp-rslora) |
+
+```python
+from peft import PeftModel
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
+base = AutoModelForCausalLM.from_pretrained(
+    "meta-llama/Meta-Llama-3.1-8B-Instruct",
+    device_map="auto", torch_dtype="auto",
+)
+tok = AutoTokenizer.from_pretrained("meta-llama/Meta-Llama-3.1-8B-Instruct")
+model = PeftModel.from_pretrained(base, "tiodh/llama3.1-8b-jssp-lora")
+```
+
 ### Findings
 
 - **LoRA wins on 3 of 4 models** (LLaMA, Granite, Ministral) on every metric — feasibility, exactness, and gap.
