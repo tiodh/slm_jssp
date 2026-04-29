@@ -1,0 +1,276 @@
+{
+  "generated_at": "2026-04-28T20:25:35.666652",
+  "config": {
+    "num_samples": 200,
+    "dataset": "data/starjob_train_sm.jsonl",
+    "seed": 42,
+    "gen_params": {
+      "temperature": 0.1,
+      "top_p": 0.95,
+      "max_new_tokens": 4096
+    },
+    "note": "LoRA and rsLoRA evaluated with identical pipeline (eval_lora.py / eval_rslora.py) and identical feasibility validator."
+  },
+  "rows": [
+    {
+      "method": "lora",
+      "model": "llama",
+      "checkpoint": "output_alpha32_r32_seq8192_b1_ga8_ep1/checkpoint-9800",
+      "total_samples": 200,
+      "time_min": 21.5,
+      "feasible": 193,
+      "feasible_pct": 96.5,
+      "exact_makespan": 69,
+      "exact_pct": 34.5,
+      "feasible_exact": 69,
+      "mean_gap_pct": 6.88,
+      "median_gap_pct": 3.47
+    },
+    {
+      "method": "lora",
+      "model": "granite",
+      "checkpoint": "output_granite8b_alpha32_r32_seq8192_b1_ga8_ep1/checkpoint-9800",
+      "total_samples": 200,
+      "time_min": 134.9,
+      "feasible": 173,
+      "feasible_pct": 86.5,
+      "exact_makespan": 67,
+      "exact_pct": 33.5,
+      "feasible_exact": 67,
+      "mean_gap_pct": 56.15,
+      "median_gap_pct": 4.76
+    },
+    {
+      "method": "lora",
+      "model": "ministral",
+      "checkpoint": "output_ministral8b_alpha32_r32_seq8192_b1_ga8_ep1/checkpoint-9800",
+      "total_samples": 200,
+      "time_min": 93.8,
+      "feasible": 190,
+      "feasible_pct": 95.0,
+      "exact_makespan": 64,
+      "exact_pct": 32.0,
+      "feasible_exact": 63,
+      "mean_gap_pct": 15.67,
+      "median_gap_pct": 4.91
+    },
+    {
+      "method": "lora",
+      "model": "qwen2",
+      "checkpoint": "output_qwen2_7b_alpha32_r32_seq8192_b1_ga8_ep1/checkpoint-9800",
+      "total_samples": 200,
+      "time_min": 38.6,
+      "feasible": 2,
+      "feasible_pct": 1.0,
+      "exact_makespan": 6,
+      "exact_pct": 3.0,
+      "feasible_exact": 2,
+      "mean_gap_pct": 56.3,
+      "median_gap_pct": 28.29
+    },
+    {
+      "method": "rslora",
+      "model": "llama",
+      "checkpoint": "output_llama8b_rslora_alpha32_r32_seq8192_b1_ga8_ep1/checkpoint-9800",
+      "total_samples": 200,
+      "time_min": 24.2,
+      "feasible": 190,
+      "feasible_pct": 95.0,
+      "exact_makespan": 64,
+      "exact_pct": 32.0,
+      "feasible_exact": 64,
+      "mean_gap_pct": 9.8,
+      "median_gap_pct": 5.29
+    },
+    {
+      "method": "rslora",
+      "model": "granite",
+      "checkpoint": "output_granite8b_rslora_alpha32_r32_seq8192_b1_ga8_ep1/checkpoint-200",
+      "total_samples": 200,
+      "time_min": 147.9,
+      "feasible": 49,
+      "feasible_pct": 24.5,
+      "exact_makespan": 11,
+      "exact_pct": 5.5,
+      "feasible_exact": 10,
+      "mean_gap_pct": 215.27,
+      "median_gap_pct": 41.42
+    },
+    {
+      "method": "rslora",
+      "model": "ministral",
+      "checkpoint": "output_ministral8b_rslora_alpha32_r32_seq8192_b1_ga8_ep1/checkpoint-9800",
+      "total_samples": 200,
+      "time_min": 118.9,
+      "feasible": 128,
+      "feasible_pct": 64.0,
+      "exact_makespan": 49,
+      "exact_pct": 24.5,
+      "feasible_exact": 43,
+      "mean_gap_pct": 42.93,
+      "median_gap_pct": 9.25
+    },
+    {
+      "method": "rslora",
+      "model": "qwen2",
+      "checkpoint": "output_qwen2_7b_rslora_alpha32_r32_seq8192_b1_ga8_ep1/checkpoint-5800",
+      "total_samples": 200,
+      "time_min": 31.8,
+      "feasible": 100,
+      "feasible_pct": 50.0,
+      "exact_makespan": 55,
+      "exact_pct": 27.5,
+      "feasible_exact": 51,
+      "mean_gap_pct": 27.81,
+      "median_gap_pct": 9.37
+    }
+  ],
+  "by_model": {
+    "llama": {
+      "lora": {
+        "method": "lora",
+        "model": "llama",
+        "checkpoint": "output_alpha32_r32_seq8192_b1_ga8_ep1/checkpoint-9800",
+        "total_samples": 200,
+        "time_min": 21.5,
+        "feasible": 193,
+        "feasible_pct": 96.5,
+        "exact_makespan": 69,
+        "exact_pct": 34.5,
+        "feasible_exact": 69,
+        "mean_gap_pct": 6.88,
+        "median_gap_pct": 3.47
+      },
+      "rslora": {
+        "method": "rslora",
+        "model": "llama",
+        "checkpoint": "output_llama8b_rslora_alpha32_r32_seq8192_b1_ga8_ep1/checkpoint-9800",
+        "total_samples": 200,
+        "time_min": 24.2,
+        "feasible": 190,
+        "feasible_pct": 95.0,
+        "exact_makespan": 64,
+        "exact_pct": 32.0,
+        "feasible_exact": 64,
+        "mean_gap_pct": 9.8,
+        "median_gap_pct": 5.29
+      }
+    },
+    "granite": {
+      "lora": {
+        "method": "lora",
+        "model": "granite",
+        "checkpoint": "output_granite8b_alpha32_r32_seq8192_b1_ga8_ep1/checkpoint-9800",
+        "total_samples": 200,
+        "time_min": 134.9,
+        "feasible": 173,
+        "feasible_pct": 86.5,
+        "exact_makespan": 67,
+        "exact_pct": 33.5,
+        "feasible_exact": 67,
+        "mean_gap_pct": 56.15,
+        "median_gap_pct": 4.76
+      },
+      "rslora": {
+        "method": "rslora",
+        "model": "granite",
+        "checkpoint": "output_granite8b_rslora_alpha32_r32_seq8192_b1_ga8_ep1/checkpoint-200",
+        "total_samples": 200,
+        "time_min": 147.9,
+        "feasible": 49,
+        "feasible_pct": 24.5,
+        "exact_makespan": 11,
+        "exact_pct": 5.5,
+        "feasible_exact": 10,
+        "mean_gap_pct": 215.27,
+        "median_gap_pct": 41.42
+      }
+    },
+    "ministral": {
+      "lora": {
+        "method": "lora",
+        "model": "ministral",
+        "checkpoint": "output_ministral8b_alpha32_r32_seq8192_b1_ga8_ep1/checkpoint-9800",
+        "total_samples": 200,
+        "time_min": 93.8,
+        "feasible": 190,
+        "feasible_pct": 95.0,
+        "exact_makespan": 64,
+        "exact_pct": 32.0,
+        "feasible_exact": 63,
+        "mean_gap_pct": 15.67,
+        "median_gap_pct": 4.91
+      },
+      "rslora": {
+        "method": "rslora",
+        "model": "ministral",
+        "checkpoint": "output_ministral8b_rslora_alpha32_r32_seq8192_b1_ga8_ep1/checkpoint-9800",
+        "total_samples": 200,
+        "time_min": 118.9,
+        "feasible": 128,
+        "feasible_pct": 64.0,
+        "exact_makespan": 49,
+        "exact_pct": 24.5,
+        "feasible_exact": 43,
+        "mean_gap_pct": 42.93,
+        "median_gap_pct": 9.25
+      }
+    },
+    "qwen2": {
+      "lora": {
+        "method": "lora",
+        "model": "qwen2",
+        "checkpoint": "output_qwen2_7b_alpha32_r32_seq8192_b1_ga8_ep1/checkpoint-9800",
+        "total_samples": 200,
+        "time_min": 38.6,
+        "feasible": 2,
+        "feasible_pct": 1.0,
+        "exact_makespan": 6,
+        "exact_pct": 3.0,
+        "feasible_exact": 2,
+        "mean_gap_pct": 56.3,
+        "median_gap_pct": 28.29
+      },
+      "rslora": {
+        "method": "rslora",
+        "model": "qwen2",
+        "checkpoint": "output_qwen2_7b_rslora_alpha32_r32_seq8192_b1_ga8_ep1/checkpoint-5800",
+        "total_samples": 200,
+        "time_min": 31.8,
+        "feasible": 100,
+        "feasible_pct": 50.0,
+        "exact_makespan": 55,
+        "exact_pct": 27.5,
+        "feasible_exact": 51,
+        "mean_gap_pct": 27.81,
+        "median_gap_pct": 9.37
+      }
+    }
+  },
+  "winners": {
+    "llama": {
+      "feasible_pct": "lora",
+      "exact_pct": "lora",
+      "mean_gap_pct": "lora",
+      "median_gap_pct": "lora"
+    },
+    "granite": {
+      "feasible_pct": "lora",
+      "exact_pct": "lora",
+      "mean_gap_pct": "lora",
+      "median_gap_pct": "lora"
+    },
+    "ministral": {
+      "feasible_pct": "lora",
+      "exact_pct": "lora",
+      "mean_gap_pct": "lora",
+      "median_gap_pct": "lora"
+    },
+    "qwen2": {
+      "feasible_pct": "rslora",
+      "exact_pct": "rslora",
+      "mean_gap_pct": "rslora",
+      "median_gap_pct": "rslora"
+    }
+  }
+}

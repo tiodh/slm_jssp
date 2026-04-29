@@ -34,7 +34,7 @@ for key, (label, color) in LABELS.items():
     sm = smooth(vals, k)
     sm_steps = steps[k-1:]
     ax.plot(sm_steps, sm, label=label, color=color, linewidth=1.6)
-ax.set_title("Training Loss  (50-step moving avg)", fontsize=13)
+ax.set_title("LoRA Training Loss  (50-step moving avg)", fontsize=13)
 ax.set_xlabel("Step")
 ax.set_ylabel("Loss")
 ax.grid(alpha=0.3)
@@ -49,7 +49,7 @@ for key, (label, color) in LABELS.items():
     vals  = [p[1] for p in d]
     ax.plot(steps, vals, label=label, color=color, marker="o",
             markersize=3, linewidth=1.6)
-ax.set_title("Evaluation Loss", fontsize=13)
+ax.set_title("LoRA Evaluation Loss", fontsize=13)
 ax.set_xlabel("Step")
 ax.set_ylabel("Eval Loss")
 ax.grid(alpha=0.3)
