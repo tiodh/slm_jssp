@@ -6,7 +6,11 @@ __pycache__/
 *.py[cod]
 *.egg-info/
 venv/
+venv-grpo/
 .venv/
+
+# GRPO training artifacts (checkpoints + per-step logs, ~15 GB)
+grpo_jssp/runs/
 
 # Caches
 unsloth_compiled_cache/

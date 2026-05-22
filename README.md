@@ -106,6 +106,48 @@ model = PeftModel.from_pretrained(base, "tiodh/llama3.1-8b-jssp-lora")
 
 ---
 
+## GRPO Continuation — pushing beyond the SFT baseline
+
+After fine-tuning, we run **GRPO** (Group Relative Policy Optimization, TRL 0.15.2) on top of the LLaMA 3.1-8B + rsLoRA checkpoint to push feasibility further — especially out-of-distribution.
+
+Six prior GRPO variants (V1–V4.2) all **collapsed during training** via two repeating mechanisms: (a) absorbing-state collapse (`reward_std → 0` → no gradient) and (b) length escape (`completion_length` drifts → grad spike → policy leaves the SFT basin). The full design history is in [`grpo_jssp/EXPERIMENT_NOTES.md`](grpo_jssp/EXPERIMENT_NOTES.md).
+
+**V5** is the first GRPO run that completes 500 training steps without collapse, and the first to **strictly improve over the SFT baseline** on every in-distribution metric. The design pairs V4's 7-component hybrid reward with a hard length-control mechanism applied at the **advantage** level (not at the reward level — soft length shaping in V2 was actively harmful):
+
+```python
+class LengthControlledGRPOTrainer(GRPOTrainer):
+    def _prepare_inputs(self, inputs):
+        out = super()._prepare_inputs(inputs)
+        clen = out["completion_mask"].sum(dim=1).float()
+        gold_est = 12.5 * n_ops + 50
+        over = clen > (2.0 * gold_est)
+        out["advantages"] = torch.where(over, torch.zeros_like(adv), adv)
+        return out
+```
+
+A sample whose completion length exceeds `2 × gold_est` has its advantage zeroed, so it contributes no gradient — neither rewarded nor penalized. The reward function sees no length term at all; length control is fully decoupled and pluggable to any reward function that exposes a per-sample size proxy.
+
+### Results: V5 vs SFT baseline
+
+| Run | Split | Feasibility | Median gap | Mean gap | Routing violations |
+|---|---|---:|---:|---:|---:|
+| SFT baseline (rsLoRA ckpt-9800) | SM test (200) | 95.0% | 3.87% | 6.73% | 100 |
+| **GRPO V5 (500 steps)** | SM test (200) | **97.0%** | **3.02%** | **5.36%** | **9** |
+| SFT baseline (rsLoRA ckpt-9800) | OOD held-out (18) | 50.0% | 10.91% | 20.12% | 5 |
+| **GRPO V5 (500 steps)** | OOD held-out (18) | **66.7%** | **10.16%** | 17.44% | 3 |
+
+Bold = V5 beats baseline. OOD held-out = 18 FT+LA instances never seen during SFT or GRPO training. SM test = 2% held-out split (seed=42) of the StarJob SM data.
+
+**Highlights:**
+- **OOD feasibility +16.7pp** (9/18 → 12/18) — the headline result. GRPO is generalizing beyond the training distribution.
+- **SM routing violations −91%** (100 → 9) — V5 also teaches format/routing discipline in-distribution.
+- **No collapse:** at step 500 reward 6.92, reward_std 0.033, grad_norm 0.59, completion_length 487, KL 0.31 — all healthy. V4 and V4.2 had collapsed at steps 340 and 315 respectively under the same data and hyperparameters.
+- The 6 remaining OOD failures (ft20, la06–la10) are the same LA 5×5 family that fails across **every** GRPO variant, including SFT — likely an OOD shape the model never saw at SFT, not a V5-specific regression.
+
+Full eval JSONs: [`grpo_jssp/eval_results/full_hybrid_lc_n2000_v5_{ood,sm}.json`](grpo_jssp/eval_results/). Trained adapter: `grpo_jssp/runs/full_hybrid_lc_n2000_v5/final_adapter/`.
+
+---
+
 ## Reproducibility
 
 ### Setup
