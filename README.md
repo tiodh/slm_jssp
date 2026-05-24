@@ -146,6 +146,52 @@ Bold = V5 beats baseline. OOD held-out = 18 FT+LA instances never seen during SF
 
 Full eval JSONs: [`grpo_jssp/eval_results/full_hybrid_lc_n2000_v5_{ood,sm}.json`](grpo_jssp/eval_results/). Trained adapter: `grpo_jssp/runs/full_hybrid_lc_n2000_v5/final_adapter/`.
 
+### V6 — V1 stratified reward + length control (ablation)
+
+V6 keeps V5's advantage-level length control but swaps the V4 hybrid reward (range [−1, +7]) for the original **V1 stratified reward** (range ≈ [−1, +1]). The motivation is to test whether the milder, narrower reward range still benefits from length control, and how it shapes the trade-off between feasibility and makespan tightness.
+
+V6 was budgeted for 500 steps but stopped at **checkpoint-400** due to GPU memory pressure (each resume crashed faster as the model produced longer completions). Training dynamics through step 400 were healthy; ck-400 represents 80% of the planned budget.
+
+| Run | Split | Feasibility | Median gap | Mean gap |
+|---|---|---:|---:|---:|
+| SFT baseline | SM test (200) | 95.0% | 3.87% | 6.73% |
+| GRPO V5 (500 steps) | SM test (200) | **97.0%** | 3.02% | **5.36%** |
+| GRPO V6 ck-400 | SM test (200) | 95.0% | **2.97%** | 5.72% |
+| SFT baseline | OOD held-out (18) | 50.0% | 10.91% | 20.12% |
+| GRPO V5 (500 steps) | OOD held-out (18) | **66.7%** | 10.16% | 17.44% |
+| GRPO V6 ck-400 | OOD held-out (18) | 61.1% | 10.91% | **11.30%** |
+
+#### Full metric breakdown — all runs × both splits
+
+Violation counts are summed across all instances in the split. Lower is better for every column except feasibility.
+
+**SM test (200 samples):**
+
+| Run | Feas % | n_feasible | Mean gap | Median gap | missing_op | routing_order | machine_cap | timing | precedence |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| SFT baseline | 95.0% | 190/200 | 6.73% | 3.87% | 5 | 100 | 389 | 40 | 70 |
+| GRPO V5 (500 steps) | **97.0%** | **194/200** | **5.36%** | 3.02% | 4 | **9** | **1** | **3** | **5** |
+| GRPO V6 ck-400 | 95.0% | 190/200 | 5.72% | **2.97%** | **2** | 114 | 415 | 51 | 80 |
+
+**OOD held-out (18 FT+LA instances):**
+
+| Run | Feas % | n_feasible | Mean gap | Median gap | missing_op | routing_order | machine_cap | timing | precedence |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| SFT baseline | 50.0% | 9/18 | 20.12% | 10.91% | 177 | 5 | 30 | 14 | 1 |
+| GRPO V5 (500 steps) | **66.7%** | **12/18** | 17.44% | 10.16% | 177 | 3 | **0** | **0** | **0** |
+| GRPO V6 ck-400 | 61.1% | 11/18 | **11.30%** | 10.91% | 177 | **3** | 31 | 10 | 0 |
+
+Bold = best in column (per split). `missing_op = 177` on OOD is identical across all three runs — a shared structural failure on the same OOD instances (the LA 5×5 family that fails across every variant including SFT, not a V6 regression).
+
+**V6 vs V5 — trade-off, not dominance:**
+- **V6 OOD mean gap 11.30% vs V5 17.44%** (−35%): when feasible, V6's makespans are substantially tighter on out-of-distribution instances.
+- **V5 OOD feasibility 12/18 vs V6 11/18** (+1 sample): V5's broader reward range pushes harder on the feasibility constraint.
+- **SM violation profile differs**: V5 essentially eliminates routing/capacity violations on SM (mc=1, ro=9, tc=3, pr=5); V6 keeps them near baseline scale (mc=415, ro=114, tc=51, pr=80). The narrower V1 reward range provides less gradient pressure on constraint satisfaction.
+
+**Interpretation:** V5's wider reward range optimizes aggressively against violations at the cost of looser makespans. V6's stratified reward retains more of the baseline's solution-quality profile while still improving OOD generalization. Neither variant strictly dominates — V5 is the safer choice when feasibility is paramount; V6 produces shorter feasible schedules on OOD distributions.
+
+Full eval JSONs: [`grpo_jssp/eval_results/full_stratified_lc_n2000_v6_ck400_{ood,sm}.json`](grpo_jssp/eval_results/). Trained adapter: `grpo_jssp/runs/full_stratified_lc_n2000_v6/checkpoint-400/`.
+
 ---
 
 ## Reproducibility
