@@ -31,6 +31,7 @@ def check_violations(schedule_str: str, jobs_spec: list) -> dict:
 
     total = (
         info["missing_op_count"]
+        + info["over_op_count"]
         + info["routing_order_violations"]
         + info["machine_capacity_violations"]
         + info["timing_consistency_violations"]
@@ -39,6 +40,7 @@ def check_violations(schedule_str: str, jobs_spec: list) -> dict:
     return {
         "feasible": feasible,
         "missing_op_count": info["missing_op_count"],
+        "over_op_count": info["over_op_count"],
         "routing_order_violations": info["routing_order_violations"],
         "machine_capacity_violations": info["machine_capacity_violations"],
         "timing_consistency_violations": info["timing_consistency_violations"],

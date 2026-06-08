@@ -22,6 +22,15 @@ def cmd_train(args):
         run_name=args.run_name,
         max_steps=args.max_steps,
         length_control=args.length_control,
+        resume_from=args.resume_from,
+        sft_checkpoint=args.sft_checkpoint,
+        kl_coef=args.kl_coef,
+        grad_accum=args.grad_accum,
+        temperature=args.temperature,
+        learning_rate=args.learning_rate,
+        lp_alpha=args.lp_alpha,
+        eos_beta=args.eos_beta,
+        save_every=args.save_every,
     )
 
 
@@ -49,12 +58,32 @@ def main():
     sub = p.add_subparsers(dest="cmd", required=True)
 
     t = sub.add_parser("train")
-    t.add_argument("--reward-mode", choices=["hybrid", "uniform"], default="hybrid")
+    t.add_argument("--reward-mode",
+                   choices=["hybrid", "hybrid_v7", "uniform", "stratified", "stratified_v2"],
+                   default="hybrid")
     t.add_argument("--max-steps", type=int, default=None)
     t.add_argument("--max-records", type=int, default=None)
     t.add_argument("--run-name", type=str, default=None)
     t.add_argument("--length-control", action="store_true",
-                   help="V5: zero advantage of over-length samples")
+                   help="V5/V6: zero advantage of over-length samples")
+    t.add_argument("--resume-from", type=str, default=None,
+                   help="Path to a checkpoint dir to resume training from")
+    t.add_argument("--sft-checkpoint", type=str, default=None,
+                   help="Override config.SFT_CHECKPOINT (e.g. LoRA vs rsLoRA)")
+    t.add_argument("--kl-coef", type=float, default=None,
+                   help="Override config.KL_COEF (V1=0.04, V2=0.10, V3-V6=0.05)")
+    t.add_argument("--grad-accum", type=int, default=None,
+                   help="Override config.GRAD_ACCUM_STEPS (V1/V2=1, V3+=4)")
+    t.add_argument("--temperature", type=float, default=None,
+                   help="Override config.TEMPERATURE (V1/V2=0.8, V3+=0.7)")
+    t.add_argument("--learning-rate", type=float, default=None,
+                   help="Override config.LEARNING_RATE")
+    t.add_argument("--lp-alpha", type=float, default=0.10,
+                   help="V2 length penalty coefficient")
+    t.add_argument("--eos-beta", type=float, default=0.05,
+                   help="V2 EOS bonus coefficient")
+    t.add_argument("--save-every", type=int, default=None,
+                   help="Override config.SAVE_EVERY (smaller for short pilots)")
     t.set_defaults(func=cmd_train)
 
     e1 = sub.add_parser("eval-sm")
