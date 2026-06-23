@@ -40,7 +40,7 @@ Find which low-rank adapter method (LoRA vs rsLoRA) yields more *feasible* and *
 
 The same `train_<model>.py` script is used for both — pass `--use_rslora False` for plain LoRA.
 
-### Evaluation protocol
+### Evaluation protocol (SFT and GRPO)
 
 | Setting | Value |
 |---|---|
@@ -50,7 +50,7 @@ The same `train_<model>.py` script is used for both — pass `--use_rslora False
 | Feasibility check | routing order + machine non-overlap + complete operations |
 | Metrics | feasibility %, exact-makespan %, mean / median gap vs. ground truth |
 
-The same `eval_lora.py` and `eval_rslora.py` mirror each other exactly so the results are head-to-head comparable.
+The same generation settings are used in `eval_lora.py`, `eval_rslora.py`, and `grpo_jssp/evaluate.py` (the GRPO eval pipeline), so SFT and GRPO results are directly comparable. Eval temperature `0.1` is distinct from the **GRPO rollout temperature** used during training — see the GRPO section below.
 
 ---
 
@@ -109,6 +109,23 @@ model = PeftModel.from_pretrained(base, "tiodh/llama3.1-8b-jssp-lora")
 ## GRPO Continuation — pushing beyond the SFT baseline
 
 After fine-tuning, we run **GRPO** (Group Relative Policy Optimization, TRL 0.15.2) on top of the LLaMA 3.1-8B + rsLoRA checkpoint to push feasibility further — especially out-of-distribution.
+
+### GRPO training configuration (V3–V6)
+
+| Hyperparameter | Value |
+|---|---|
+| Base policy | LLaMA 3.1-8B + rsLoRA SFT (ckpt-9800) |
+| K samples per prompt | 4 |
+| Rollout temperature | **0.7** |
+| Rollout `top_p` / `max_new_tokens` | `0.95` / `4096` |
+| Learning rate | 5e-6 |
+| KL coefficient (β) | 0.05 |
+| Gradient accumulation | 4 (effective batch = 4 prompts/update) |
+| Warmup steps | 20 |
+| Max grad norm | 1.0 |
+| Length control | advantage masking, `OVERLEN_FACTOR = 2.0` (V5 onward) |
+
+Eval generation uses `temperature=0.1` (see Evaluation protocol above) — only **training rollouts** use `0.7`. Full settings: [`grpo_jssp/config.py`](grpo_jssp/config.py).
 
 Six prior GRPO variants (V1–V4.2) all **collapsed during training** via two repeating mechanisms: (a) absorbing-state collapse (`reward_std → 0` → no gradient) and (b) length escape (`completion_length` drifts → grad spike → policy leaves the SFT basin). The full design history is in [`grpo_jssp/EXPERIMENT_NOTES.md`](grpo_jssp/EXPERIMENT_NOTES.md).
 

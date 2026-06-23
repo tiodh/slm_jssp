@@ -5,9 +5,11 @@ Per-model fields (13):
   missing, routing_v, machine_v, timing_v, precedence_v, total_v -- violation breakdown
   gen_time                                                       -- latency
 
-Models (9):
-  SFT-LoRA, LoRA-LLaMA, rsLoRA-LLaMA, GRPO-V1, GRPO-V3, GRPO-V4, GRPO-V5,
-  GRPO-V6 ck400, GRPO-V7
+Models (15):
+  Local LoRA (9):   SFT-LoRA, LoRA-LLaMA, rsLoRA-LLaMA, GRPO-V1, GRPO-V3, GRPO-V4,
+                    GRPO-V5, GRPO-V6 ck400, GRPO-V7
+  OpenAI API (6):   GPT-4o-mini, GPT-4o, GPT-5 (minimal), o3-mini (medium),
+                    o3-mini (high), o3 (medium)
 (GRPO-V2 omitted: training collapsed at step 700, no final_adapter.)
 
 LoRA-LLaMA: no granular per-instance source available; only the original 6 fields
@@ -120,6 +122,41 @@ def load_from_json(path: Path) -> dict:
     return out
 
 
+def load_from_openai_json(path: Path) -> dict:
+    """OpenAI benchmark JSON schema. Per-instance under 'results' key with fields:
+    name, size, best_known, pred (=makespan), gap_pct, feasible, ops_emitted,
+    ops_expected, extra_ops, over_op_count, missing_op_count,
+    precedence_violations, routing_order_violations, timing_consistency_violations,
+    machine_capacity_violations, time_s, cost_usd, etc."""
+    with open(path) as f:
+        d = json.load(f)
+    out = {}
+    for r in d["results"]:
+        tv = (
+            int(r.get("missing_op_count", 0) or 0)
+            + int(r.get("over_op_count", 0) or 0)
+            + int(r.get("precedence_violations", 0) or 0)
+            + int(r.get("routing_order_violations", 0) or 0)
+            + int(r.get("timing_consistency_violations", 0) or 0)
+            + int(r.get("machine_capacity_violations", 0) or 0)
+        )
+        out[r["name"]] = {
+            "strict_feas": str(r["feasible"]),
+            "trim_ms": r.get("pred", "") if r.get("pred") is not None else "",
+            "emit": r.get("ops_emitted", ""),
+            "exp": r.get("ops_expected", ""),
+            "over_jobs": r.get("over_op_count", 0),
+            "missing": r.get("missing_op_count", ""),
+            "routing_v": r.get("routing_order_violations", ""),
+            "machine_v": r.get("machine_capacity_violations", ""),
+            "timing_v": r.get("timing_consistency_violations", ""),
+            "precedence_v": r.get("precedence_violations", ""),
+            "total_v": tv,
+            "gen_time": r.get("time_s", ""),
+        }
+    return out
+
+
 def load_legacy_strict(path: Path) -> dict:
     """The pre-existing CSV — used only for LoRA-LLaMA's 6 base fields (no
     granular per-instance source elsewhere) and to fill `over_jobs` for SFT/V5/V6
@@ -163,8 +200,19 @@ def main():
             pi["exp"] = lr.get(f"{lbl}_exp", "")
             pi["over_jobs"] = lr.get(f"{lbl}_over_jobs", "")
 
-    # V1/V3/V4/V7 trim_gap from BKS
-    for store in [v1_pi, v3_pi, v4_pi, v7_pi]:
+    # OpenAI API baselines (post-patch checker schema already)
+    gpt4o_mini_pi = load_from_openai_json(REPO / "metrics_openai_gpt-4o-mini_benchmarks.json")
+    gpt4o_pi = load_from_openai_json(REPO / "metrics_openai_gpt-4o_benchmarks.json")
+    gpt5_pi = load_from_openai_json(REPO / "metrics_openai_gpt-5_minimal_benchmarks.json")
+    o3mini_med_pi = load_from_openai_json(REPO / "metrics_openai_o3-mini_medium_benchmarks.json")
+    o3mini_high_pi = load_from_openai_json(REPO / "metrics_openai_o3-mini_high_benchmarks.json")
+    o3_med_pi = load_from_openai_json(REPO / "metrics_openai_o3_medium_benchmarks.json")
+
+    # V1/V3/V4/V7 + OpenAI stores: trim_gap computed from BKS (OpenAI's native
+    # gap_pct exists too but recompute for consistency with LoRA models).
+    for store in [v1_pi, v3_pi, v4_pi, v7_pi,
+                  gpt4o_mini_pi, gpt4o_pi, gpt5_pi,
+                  o3mini_med_pi, o3mini_high_pi, o3_med_pi]:
         for name, pi in store.items():
             lr = legacy.get(name, {})
             pi["trim_gap"] = _gap(pi["trim_ms"], lr.get("bks", 0), pi["strict_feas"] == "True")
@@ -191,6 +239,12 @@ def main():
         ("GRPO-V5", v5_pi),
         ("GRPO-V6 ck400", v6_pi),
         ("GRPO-V7", v7_pi),
+        ("GPT-4o-mini", gpt4o_mini_pi),
+        ("GPT-4o", gpt4o_pi),
+        ("GPT-5 minimal", gpt5_pi),
+        ("o3-mini medium", o3mini_med_pi),
+        ("o3-mini high", o3mini_high_pi),
+        ("o3 medium", o3_med_pi),
     ]
 
     fieldnames = ["name", "bks"]

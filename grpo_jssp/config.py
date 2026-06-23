@@ -58,7 +58,20 @@ WARMUP_STEPS = 20
 # Each constraint contributes equally (+1 satisfied / -(n/N_ops) violated), so
 # no per-category weights are needed -- this also removes the prior OOD
 # test-set leakage concern from deriving weights off a violation distribution.
-REWARD_MODE = "hybrid"  # "hybrid" (V4) | "uniform" (ablation on the V4 scale)
+REWARD_MODE = "hybrid"  # "hybrid" (V4) | "uniform" (V4-scale ablation) | "stratified" (V1)
+
+# --- V1 stratified reward weights (frozen, do not re-derive without renaming) ---
+# Original V1 design: per-category weight = count / 233, where 233 is the total
+# number of violations the rsLoRA-SFT model produced on 200 SM samples (seed=42).
+# Range of the resulting reward is approx [-1, 1]. Recorded here so the V1
+# ablation reproduces the exact original V1 reward without re-measuring.
+V1_WEIGHTS = {
+    "missing_op_count":               4 / 233,   # 0.0172
+    "routing_order_violations":      33 / 233,   # 0.1416
+    "machine_capacity_violations":  145 / 233,   # 0.6223
+    "timing_consistency_violations": 33 / 233,   # 0.1416
+    "precedence_violations":         18 / 233,   # 0.0773
+}
 
 # --- V5 length control (advantage masking) ---
 # A sample whose completion_length exceeds OVERLEN_FACTOR x gold_est gets its

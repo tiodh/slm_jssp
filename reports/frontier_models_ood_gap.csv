@@ -1,0 +1,109 @@
+model,instance,known_range,feasible,gap_pct,makespan
+GPT-4o-mini,ft06,known,False,,13
+GPT-4o,ft06,known,False,,47
+GPT-5 minimal,ft06,known,False,,74
+o3-mini medium,ft06,known,True,176.3636,152
+o3-mini high,ft06,known,False,,
+o3 medium,ft06,known,False,,
+GPT-4o-mini,ft10,known,False,,227
+GPT-4o,ft10,known,False,,861
+GPT-5 minimal,ft10,known,True,449.3548,5109
+o3-mini medium,ft10,known,False,,
+o3-mini high,ft10,known,False,,
+o3 medium,ft10,known,True,264.9462,3394
+GPT-4o-mini,ft20,unknown,False,,444
+GPT-4o,ft20,unknown,False,,760
+GPT-5 minimal,ft20,unknown,False,,1506
+o3-mini medium,ft20,unknown,False,,1184
+o3-mini high,ft20,unknown,False,,
+o3 medium,ft20,unknown,True,176.2232,3218
+GPT-4o-mini,la01,known,False,,415
+GPT-4o,la01,known,False,,754
+GPT-5 minimal,la01,known,False,,906
+o3-mini medium,la01,known,False,,2262
+o3-mini high,la01,known,False,,
+o3 medium,la01,known,True,241.1411,2272
+GPT-4o-mini,la02,known,False,,295
+GPT-4o,la02,known,False,,893
+GPT-5 minimal,la02,known,False,,996
+o3-mini medium,la02,known,False,,
+o3-mini high,la02,known,False,,
+o3 medium,la02,known,True,28.855,844
+GPT-4o-mini,la03,known,False,,76
+GPT-4o,la03,known,False,,951
+GPT-5 minimal,la03,known,False,,836
+o3-mini medium,la03,known,False,,685
+o3-mini high,la03,known,False,,
+o3 medium,la03,known,True,164.4891,1579
+GPT-4o-mini,la04,known,False,,204
+GPT-4o,la04,known,False,,721
+GPT-5 minimal,la04,known,False,,707
+o3-mini medium,la04,known,False,,62
+o3-mini high,la04,known,False,,
+o3 medium,la04,known,False,,
+GPT-4o-mini,la05,known,False,,114
+GPT-4o,la05,known,False,,786
+GPT-5 minimal,la05,known,False,,663
+o3-mini medium,la05,known,False,,
+o3-mini high,la05,known,True,0.0,593
+o3 medium,la05,known,False,,
+GPT-4o-mini,la06,unknown,False,,926
+GPT-4o,la06,unknown,False,,574
+GPT-5 minimal,la06,unknown,False,,712
+o3-mini medium,la06,unknown,True,221.1663,2974
+o3-mini high,la06,unknown,False,,
+o3 medium,la06,unknown,False,,
+GPT-4o-mini,la07,unknown,False,,454
+GPT-4o,la07,unknown,False,,1006
+GPT-5 minimal,la07,unknown,False,,810
+o3-mini medium,la07,unknown,True,192.5843,2604
+o3-mini high,la07,unknown,False,,
+o3 medium,la07,unknown,False,,
+GPT-4o-mini,la08,unknown,False,,262
+GPT-4o,la08,unknown,False,,1061
+GPT-5 minimal,la08,unknown,False,,947
+o3-mini medium,la08,unknown,False,,2895
+o3-mini high,la08,unknown,False,,
+o3 medium,la08,unknown,True,343.2213,3825
+GPT-4o-mini,la09,unknown,False,,208
+GPT-4o,la09,unknown,False,,1195
+GPT-5 minimal,la09,unknown,False,,1114
+o3-mini medium,la09,unknown,True,226.7087,3107
+o3-mini high,la09,unknown,True,0.0,951
+o3 medium,la09,unknown,True,348.265,4263
+GPT-4o-mini,la10,unknown,False,,264
+GPT-4o,la10,unknown,False,,1045
+GPT-5 minimal,la10,unknown,False,,964
+o3-mini medium,la10,unknown,False,,958
+o3-mini high,la10,unknown,False,,
+o3 medium,la10,unknown,True,0.0,958
+GPT-4o-mini,la16,known,False,,245
+GPT-4o,la16,known,False,,717
+GPT-5 minimal,la16,known,False,,1181
+o3-mini medium,la16,known,False,,
+o3-mini high,la16,known,False,,
+o3 medium,la16,known,True,312.4868,3898
+GPT-4o-mini,la17,known,False,,102
+GPT-4o,la17,known,False,,646
+GPT-5 minimal,la17,known,False,,646
+o3-mini medium,la17,known,True,399.8724,3919
+o3-mini high,la17,known,False,,
+o3 medium,la17,known,True,390.8163,3848
+GPT-4o-mini,la18,known,False,,249
+GPT-4o,la18,known,False,,663
+GPT-5 minimal,la18,known,False,,1476
+o3-mini medium,la18,known,False,,
+o3-mini high,la18,known,False,,
+o3 medium,la18,known,True,20.7547,1024
+GPT-4o-mini,la19,known,False,,126
+GPT-4o,la19,known,False,,880
+GPT-5 minimal,la19,known,False,,1026
+o3-mini medium,la19,known,False,,
+o3-mini high,la19,known,False,,
+o3 medium,la19,known,True,430.285,4465
+GPT-4o-mini,la20,known,False,,186
+GPT-4o,la20,known,False,,756
+GPT-5 minimal,la20,known,False,,1595
+o3-mini medium,la20,known,False,,
+o3-mini high,la20,known,False,,
+o3 medium,la20,known,True,332.9268,3905

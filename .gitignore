@@ -25,3 +25,13 @@ data/*
 
 # Logs
 *.log
+
+# Large binaries / installers
+*.run
+*.zip
+*.swp
+
+# Large dataset files in sub-projects
+RL2026/data/starjob_train_sm.jsonl
+DL2026/data/starjob_train_sm.jsonl
+DL2026/outputs/

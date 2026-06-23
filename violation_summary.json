@@ -1,0 +1,1662 @@
+{
+  "starjob_sm": {
+    "llama": {
+      "LoRA": {
+        "valid": 200,
+        "feasible": 191,
+        "total_samples": 200,
+        "violation_totals": {
+          "precedence_violations": 1,
+          "routing_order_violations": 13,
+          "timing_consistency_violations": 9,
+          "machine_capacity_violations": 13,
+          "missing_op_count": 15
+        },
+        "violation_instance_counts": {
+          "precedence_violations": 1,
+          "routing_order_violations": 2,
+          "timing_consistency_violations": 2,
+          "machine_capacity_violations": 3,
+          "missing_op_count": 7
+        },
+        "by_size_bucket": {
+          "M (6-10)": {
+            "n": 159,
+            "feasible": 151,
+            "violation_totals": {
+              "precedence_violations": 1,
+              "routing_order_violations": 13,
+              "timing_consistency_violations": 8,
+              "machine_capacity_violations": 13,
+              "missing_op_count": 14
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 1,
+              "routing_order_violations": 2,
+              "timing_consistency_violations": 1,
+              "machine_capacity_violations": 3,
+              "missing_op_count": 6
+            }
+          },
+          "S (<=5x5)": {
+            "n": 41,
+            "feasible": 40,
+            "violation_totals": {
+              "precedence_violations": 0,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 1,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 1
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 0,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 1,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 1
+            }
+          }
+        }
+      },
+      "rsLoRA": {
+        "valid": 200,
+        "feasible": 190,
+        "total_samples": 200,
+        "violation_totals": {
+          "precedence_violations": 18,
+          "routing_order_violations": 33,
+          "timing_consistency_violations": 33,
+          "machine_capacity_violations": 145,
+          "missing_op_count": 4
+        },
+        "violation_instance_counts": {
+          "precedence_violations": 5,
+          "routing_order_violations": 6,
+          "timing_consistency_violations": 4,
+          "machine_capacity_violations": 4,
+          "missing_op_count": 2
+        },
+        "by_size_bucket": {
+          "M (6-10)": {
+            "n": 159,
+            "feasible": 149,
+            "violation_totals": {
+              "precedence_violations": 18,
+              "routing_order_violations": 33,
+              "timing_consistency_violations": 33,
+              "machine_capacity_violations": 145,
+              "missing_op_count": 4
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 5,
+              "routing_order_violations": 6,
+              "timing_consistency_violations": 4,
+              "machine_capacity_violations": 4,
+              "missing_op_count": 2
+            }
+          },
+          "S (<=5x5)": {
+            "n": 41,
+            "feasible": 41,
+            "violation_totals": {
+              "precedence_violations": 0,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 0
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 0,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 0
+            }
+          }
+        }
+      }
+    },
+    "granite": {
+      "LoRA": {
+        "valid": 200,
+        "feasible": 174,
+        "total_samples": 200,
+        "violation_totals": {
+          "precedence_violations": 79,
+          "routing_order_violations": 306,
+          "timing_consistency_violations": 85,
+          "machine_capacity_violations": 225,
+          "missing_op_count": 9
+        },
+        "violation_instance_counts": {
+          "precedence_violations": 9,
+          "routing_order_violations": 21,
+          "timing_consistency_violations": 15,
+          "machine_capacity_violations": 11,
+          "missing_op_count": 5
+        },
+        "by_size_bucket": {
+          "M (6-10)": {
+            "n": 159,
+            "feasible": 133,
+            "violation_totals": {
+              "precedence_violations": 79,
+              "routing_order_violations": 306,
+              "timing_consistency_violations": 85,
+              "machine_capacity_violations": 225,
+              "missing_op_count": 9
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 9,
+              "routing_order_violations": 21,
+              "timing_consistency_violations": 15,
+              "machine_capacity_violations": 11,
+              "missing_op_count": 5
+            }
+          },
+          "S (<=5x5)": {
+            "n": 41,
+            "feasible": 41,
+            "violation_totals": {
+              "precedence_violations": 0,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 0
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 0,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 0
+            }
+          }
+        }
+      },
+      "rsLoRA": {
+        "valid": 200,
+        "feasible": 44,
+        "total_samples": 200,
+        "violation_totals": {
+          "precedence_violations": 275,
+          "routing_order_violations": 1260,
+          "timing_consistency_violations": 1711,
+          "machine_capacity_violations": 495,
+          "missing_op_count": 1038
+        },
+        "violation_instance_counts": {
+          "precedence_violations": 65,
+          "routing_order_violations": 120,
+          "timing_consistency_violations": 126,
+          "machine_capacity_violations": 75,
+          "missing_op_count": 127
+        },
+        "by_size_bucket": {
+          "M (6-10)": {
+            "n": 159,
+            "feasible": 20,
+            "violation_totals": {
+              "precedence_violations": 273,
+              "routing_order_violations": 1248,
+              "timing_consistency_violations": 1690,
+              "machine_capacity_violations": 493,
+              "missing_op_count": 1019
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 63,
+              "routing_order_violations": 111,
+              "timing_consistency_violations": 111,
+              "machine_capacity_violations": 73,
+              "missing_op_count": 112
+            }
+          },
+          "S (<=5x5)": {
+            "n": 41,
+            "feasible": 24,
+            "violation_totals": {
+              "precedence_violations": 2,
+              "routing_order_violations": 12,
+              "timing_consistency_violations": 21,
+              "machine_capacity_violations": 2,
+              "missing_op_count": 19
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 2,
+              "routing_order_violations": 9,
+              "timing_consistency_violations": 15,
+              "machine_capacity_violations": 2,
+              "missing_op_count": 15
+            }
+          }
+        }
+      }
+    },
+    "ministral": {
+      "LoRA": {
+        "valid": 200,
+        "feasible": 186,
+        "total_samples": 200,
+        "violation_totals": {
+          "precedence_violations": 27,
+          "routing_order_violations": 105,
+          "timing_consistency_violations": 30,
+          "machine_capacity_violations": 71,
+          "missing_op_count": 20
+        },
+        "violation_instance_counts": {
+          "precedence_violations": 4,
+          "routing_order_violations": 8,
+          "timing_consistency_violations": 6,
+          "machine_capacity_violations": 8,
+          "missing_op_count": 7
+        },
+        "by_size_bucket": {
+          "M (6-10)": {
+            "n": 159,
+            "feasible": 146,
+            "violation_totals": {
+              "precedence_violations": 27,
+              "routing_order_violations": 103,
+              "timing_consistency_violations": 29,
+              "machine_capacity_violations": 71,
+              "missing_op_count": 19
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 4,
+              "routing_order_violations": 7,
+              "timing_consistency_violations": 5,
+              "machine_capacity_violations": 8,
+              "missing_op_count": 6
+            }
+          },
+          "S (<=5x5)": {
+            "n": 41,
+            "feasible": 40,
+            "violation_totals": {
+              "precedence_violations": 0,
+              "routing_order_violations": 2,
+              "timing_consistency_violations": 1,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 1
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 0,
+              "routing_order_violations": 1,
+              "timing_consistency_violations": 1,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 1
+            }
+          }
+        }
+      },
+      "rsLoRA": {
+        "valid": 200,
+        "feasible": 128,
+        "total_samples": 200,
+        "violation_totals": {
+          "precedence_violations": 210,
+          "routing_order_violations": 757,
+          "timing_consistency_violations": 288,
+          "machine_capacity_violations": 833,
+          "missing_op_count": 48
+        },
+        "violation_instance_counts": {
+          "precedence_violations": 20,
+          "routing_order_violations": 68,
+          "timing_consistency_violations": 18,
+          "machine_capacity_violations": 18,
+          "missing_op_count": 46
+        },
+        "by_size_bucket": {
+          "M (6-10)": {
+            "n": 159,
+            "feasible": 88,
+            "violation_totals": {
+              "precedence_violations": 210,
+              "routing_order_violations": 753,
+              "timing_consistency_violations": 288,
+              "machine_capacity_violations": 833,
+              "missing_op_count": 47
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 20,
+              "routing_order_violations": 67,
+              "timing_consistency_violations": 18,
+              "machine_capacity_violations": 18,
+              "missing_op_count": 45
+            }
+          },
+          "S (<=5x5)": {
+            "n": 41,
+            "feasible": 40,
+            "violation_totals": {
+              "precedence_violations": 0,
+              "routing_order_violations": 4,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 1
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 0,
+              "routing_order_violations": 1,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 1
+            }
+          }
+        }
+      }
+    },
+    "qwen2": {
+      "LoRA": {
+        "valid": 200,
+        "feasible": 2,
+        "total_samples": 200,
+        "violation_totals": {
+          "precedence_violations": 371,
+          "routing_order_violations": 3110,
+          "timing_consistency_violations": 2120,
+          "machine_capacity_violations": 748,
+          "missing_op_count": 1315
+        },
+        "violation_instance_counts": {
+          "precedence_violations": 78,
+          "routing_order_violations": 186,
+          "timing_consistency_violations": 195,
+          "machine_capacity_violations": 116,
+          "missing_op_count": 185
+        },
+        "by_size_bucket": {
+          "M (6-10)": {
+            "n": 159,
+            "feasible": 0,
+            "violation_totals": {
+              "precedence_violations": 365,
+              "routing_order_violations": 3004,
+              "timing_consistency_violations": 2007,
+              "machine_capacity_violations": 738,
+              "missing_op_count": 1198
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 74,
+              "routing_order_violations": 159,
+              "timing_consistency_violations": 159,
+              "machine_capacity_violations": 109,
+              "missing_op_count": 148
+            }
+          },
+          "S (<=5x5)": {
+            "n": 41,
+            "feasible": 2,
+            "violation_totals": {
+              "precedence_violations": 6,
+              "routing_order_violations": 106,
+              "timing_consistency_violations": 113,
+              "machine_capacity_violations": 10,
+              "missing_op_count": 117
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 4,
+              "routing_order_violations": 27,
+              "timing_consistency_violations": 36,
+              "machine_capacity_violations": 7,
+              "missing_op_count": 37
+            }
+          }
+        }
+      },
+      "rsLoRA": {
+        "valid": 200,
+        "feasible": 100,
+        "total_samples": 200,
+        "violation_totals": {
+          "precedence_violations": 196,
+          "routing_order_violations": 1017,
+          "timing_consistency_violations": 549,
+          "machine_capacity_violations": 381,
+          "missing_op_count": 395
+        },
+        "violation_instance_counts": {
+          "precedence_violations": 49,
+          "routing_order_violations": 83,
+          "timing_consistency_violations": 90,
+          "machine_capacity_violations": 53,
+          "missing_op_count": 89
+        },
+        "by_size_bucket": {
+          "M (6-10)": {
+            "n": 159,
+            "feasible": 63,
+            "violation_totals": {
+              "precedence_violations": 196,
+              "routing_order_violations": 1014,
+              "timing_consistency_violations": 547,
+              "machine_capacity_violations": 379,
+              "missing_op_count": 393
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 49,
+              "routing_order_violations": 81,
+              "timing_consistency_violations": 88,
+              "machine_capacity_violations": 51,
+              "missing_op_count": 87
+            }
+          },
+          "S (<=5x5)": {
+            "n": 41,
+            "feasible": 37,
+            "violation_totals": {
+              "precedence_violations": 0,
+              "routing_order_violations": 3,
+              "timing_consistency_violations": 2,
+              "machine_capacity_violations": 2,
+              "missing_op_count": 2
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 0,
+              "routing_order_violations": 2,
+              "timing_consistency_violations": 2,
+              "machine_capacity_violations": 2,
+              "missing_op_count": 2
+            }
+          }
+        }
+      }
+    }
+  },
+  "ood_ftla": {
+    "llama": {
+      "LoRA": {
+        "n": 18,
+        "feasible": 10,
+        "violation_totals": {
+          "precedence_violations": 0,
+          "routing_order_violations": 5,
+          "timing_consistency_violations": 21,
+          "machine_capacity_violations": 138,
+          "missing_op_count": 25
+        },
+        "violation_instance_counts": {
+          "precedence_violations": 0,
+          "routing_order_violations": 3,
+          "timing_consistency_violations": 1,
+          "machine_capacity_violations": 1,
+          "missing_op_count": 6
+        },
+        "by_family": {
+          "FT": {
+            "n": 3,
+            "feasible": 1,
+            "violation_totals": {
+              "precedence_violations": 0,
+              "routing_order_violations": 1,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 8
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 0,
+              "routing_order_violations": 1,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 1
+            }
+          },
+          "LA": {
+            "n": 15,
+            "feasible": 9,
+            "violation_totals": {
+              "precedence_violations": 0,
+              "routing_order_violations": 4,
+              "timing_consistency_violations": 21,
+              "machine_capacity_violations": 138,
+              "missing_op_count": 17
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 0,
+              "routing_order_violations": 2,
+              "timing_consistency_violations": 1,
+              "machine_capacity_violations": 1,
+              "missing_op_count": 5
+            }
+          }
+        },
+        "by_shape": {
+          "6x6": {
+            "n": 1,
+            "feasible": 1,
+            "violation_totals": {
+              "precedence_violations": 0,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 0
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 0,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 0
+            }
+          },
+          "10x10": {
+            "n": 6,
+            "feasible": 2,
+            "violation_totals": {
+              "precedence_violations": 0,
+              "routing_order_violations": 5,
+              "timing_consistency_violations": 21,
+              "machine_capacity_violations": 138,
+              "missing_op_count": 3
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 0,
+              "routing_order_violations": 3,
+              "timing_consistency_violations": 1,
+              "machine_capacity_violations": 1,
+              "missing_op_count": 2
+            }
+          },
+          "20x5": {
+            "n": 1,
+            "feasible": 0,
+            "violation_totals": {
+              "precedence_violations": 0,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 8
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 0,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 1
+            }
+          },
+          "10x5": {
+            "n": 5,
+            "feasible": 5,
+            "violation_totals": {
+              "precedence_violations": 0,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 0
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 0,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 0
+            }
+          },
+          "15x5": {
+            "n": 5,
+            "feasible": 2,
+            "violation_totals": {
+              "precedence_violations": 0,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 14
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 0,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 3
+            }
+          }
+        }
+      },
+      "rsLoRA": {
+        "n": 18,
+        "feasible": 8,
+        "violation_totals": {
+          "precedence_violations": 2,
+          "routing_order_violations": 1,
+          "timing_consistency_violations": 31,
+          "machine_capacity_violations": 362,
+          "missing_op_count": 175
+        },
+        "violation_instance_counts": {
+          "precedence_violations": 2,
+          "routing_order_violations": 1,
+          "timing_consistency_violations": 2,
+          "machine_capacity_violations": 3,
+          "missing_op_count": 6
+        },
+        "by_family": {
+          "FT": {
+            "n": 3,
+            "feasible": 1,
+            "violation_totals": {
+              "precedence_violations": 0,
+              "routing_order_violations": 1,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 1,
+              "missing_op_count": 50
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 0,
+              "routing_order_violations": 1,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 1,
+              "missing_op_count": 1
+            }
+          },
+          "LA": {
+            "n": 15,
+            "feasible": 7,
+            "violation_totals": {
+              "precedence_violations": 2,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 31,
+              "machine_capacity_violations": 361,
+              "missing_op_count": 125
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 2,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 2,
+              "machine_capacity_violations": 2,
+              "missing_op_count": 5
+            }
+          }
+        },
+        "by_shape": {
+          "6x6": {
+            "n": 1,
+            "feasible": 1,
+            "violation_totals": {
+              "precedence_violations": 0,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 0
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 0,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 0
+            }
+          },
+          "10x10": {
+            "n": 6,
+            "feasible": 2,
+            "violation_totals": {
+              "precedence_violations": 1,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 31,
+              "machine_capacity_violations": 362,
+              "missing_op_count": 0
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 1,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 2,
+              "machine_capacity_violations": 3,
+              "missing_op_count": 0
+            }
+          },
+          "20x5": {
+            "n": 1,
+            "feasible": 0,
+            "violation_totals": {
+              "precedence_violations": 0,
+              "routing_order_violations": 1,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 50
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 0,
+              "routing_order_violations": 1,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 1
+            }
+          },
+          "10x5": {
+            "n": 5,
+            "feasible": 5,
+            "violation_totals": {
+              "precedence_violations": 0,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 0
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 0,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 0
+            }
+          },
+          "15x5": {
+            "n": 5,
+            "feasible": 0,
+            "violation_totals": {
+              "precedence_violations": 1,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 125
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 1,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 5
+            }
+          }
+        }
+      }
+    },
+    "granite": {
+      "LoRA": {
+        "n": 18,
+        "feasible": 6,
+        "violation_totals": {
+          "precedence_violations": 30,
+          "routing_order_violations": 121,
+          "timing_consistency_violations": 19,
+          "machine_capacity_violations": 162,
+          "missing_op_count": 22
+        },
+        "violation_instance_counts": {
+          "precedence_violations": 3,
+          "routing_order_violations": 11,
+          "timing_consistency_violations": 3,
+          "machine_capacity_violations": 6,
+          "missing_op_count": 7
+        },
+        "by_family": {
+          "FT": {
+            "n": 3,
+            "feasible": 1,
+            "violation_totals": {
+              "precedence_violations": 6,
+              "routing_order_violations": 33,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 11,
+              "missing_op_count": 4
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 1,
+              "routing_order_violations": 2,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 1,
+              "missing_op_count": 1
+            }
+          },
+          "LA": {
+            "n": 15,
+            "feasible": 5,
+            "violation_totals": {
+              "precedence_violations": 24,
+              "routing_order_violations": 88,
+              "timing_consistency_violations": 19,
+              "machine_capacity_violations": 151,
+              "missing_op_count": 18
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 2,
+              "routing_order_violations": 9,
+              "timing_consistency_violations": 3,
+              "machine_capacity_violations": 5,
+              "missing_op_count": 6
+            }
+          }
+        },
+        "by_shape": {
+          "6x6": {
+            "n": 1,
+            "feasible": 1,
+            "violation_totals": {
+              "precedence_violations": 0,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 0
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 0,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 0
+            }
+          },
+          "10x10": {
+            "n": 6,
+            "feasible": 0,
+            "violation_totals": {
+              "precedence_violations": 30,
+              "routing_order_violations": 98,
+              "timing_consistency_violations": 19,
+              "machine_capacity_violations": 162,
+              "missing_op_count": 1
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 3,
+              "routing_order_violations": 6,
+              "timing_consistency_violations": 3,
+              "machine_capacity_violations": 6,
+              "missing_op_count": 1
+            }
+          },
+          "20x5": {
+            "n": 1,
+            "feasible": 0,
+            "violation_totals": {
+              "precedence_violations": 0,
+              "routing_order_violations": 12,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 4
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 0,
+              "routing_order_violations": 1,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 1
+            }
+          },
+          "10x5": {
+            "n": 5,
+            "feasible": 5,
+            "violation_totals": {
+              "precedence_violations": 0,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 0
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 0,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 0
+            }
+          },
+          "15x5": {
+            "n": 5,
+            "feasible": 0,
+            "violation_totals": {
+              "precedence_violations": 0,
+              "routing_order_violations": 11,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 17
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 0,
+              "routing_order_violations": 4,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 5
+            }
+          }
+        }
+      },
+      "rsLoRA": {
+        "n": 18,
+        "feasible": 0,
+        "violation_totals": {
+          "precedence_violations": 55,
+          "routing_order_violations": 312,
+          "timing_consistency_violations": 312,
+          "machine_capacity_violations": 169,
+          "missing_op_count": 69
+        },
+        "violation_instance_counts": {
+          "precedence_violations": 11,
+          "routing_order_violations": 14,
+          "timing_consistency_violations": 14,
+          "machine_capacity_violations": 15,
+          "missing_op_count": 12
+        },
+        "by_family": {
+          "FT": {
+            "n": 3,
+            "feasible": 0,
+            "violation_totals": {
+              "precedence_violations": 3,
+              "routing_order_violations": 57,
+              "timing_consistency_violations": 62,
+              "machine_capacity_violations": 9,
+              "missing_op_count": 12
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 2,
+              "routing_order_violations": 2,
+              "timing_consistency_violations": 2,
+              "machine_capacity_violations": 2,
+              "missing_op_count": 3
+            }
+          },
+          "LA": {
+            "n": 15,
+            "feasible": 0,
+            "violation_totals": {
+              "precedence_violations": 52,
+              "routing_order_violations": 255,
+              "timing_consistency_violations": 250,
+              "machine_capacity_violations": 160,
+              "missing_op_count": 57
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 9,
+              "routing_order_violations": 12,
+              "timing_consistency_violations": 12,
+              "machine_capacity_violations": 13,
+              "missing_op_count": 9
+            }
+          }
+        },
+        "by_shape": {
+          "6x6": {
+            "n": 1,
+            "feasible": 0,
+            "violation_totals": {
+              "precedence_violations": 1,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 3
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 1,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 1
+            }
+          },
+          "10x10": {
+            "n": 6,
+            "feasible": 0,
+            "violation_totals": {
+              "precedence_violations": 49,
+              "routing_order_violations": 248,
+              "timing_consistency_violations": 240,
+              "machine_capacity_violations": 154,
+              "missing_op_count": 29
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 6,
+              "routing_order_violations": 6,
+              "timing_consistency_violations": 6,
+              "machine_capacity_violations": 6,
+              "missing_op_count": 3
+            }
+          },
+          "20x5": {
+            "n": 1,
+            "feasible": 0,
+            "violation_totals": {
+              "precedence_violations": 0,
+              "routing_order_violations": 18,
+              "timing_consistency_violations": 16,
+              "machine_capacity_violations": 1,
+              "missing_op_count": 2
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 0,
+              "routing_order_violations": 1,
+              "timing_consistency_violations": 1,
+              "machine_capacity_violations": 1,
+              "missing_op_count": 1
+            }
+          },
+          "10x5": {
+            "n": 5,
+            "feasible": 0,
+            "violation_totals": {
+              "precedence_violations": 2,
+              "routing_order_violations": 10,
+              "timing_consistency_violations": 6,
+              "machine_capacity_violations": 6,
+              "missing_op_count": 5
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 2,
+              "routing_order_violations": 2,
+              "timing_consistency_violations": 2,
+              "machine_capacity_violations": 4,
+              "missing_op_count": 2
+            }
+          },
+          "15x5": {
+            "n": 5,
+            "feasible": 0,
+            "violation_totals": {
+              "precedence_violations": 3,
+              "routing_order_violations": 36,
+              "timing_consistency_violations": 50,
+              "machine_capacity_violations": 8,
+              "missing_op_count": 30
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 2,
+              "routing_order_violations": 5,
+              "timing_consistency_violations": 5,
+              "machine_capacity_violations": 4,
+              "missing_op_count": 5
+            }
+          }
+        }
+      }
+    },
+    "ministral": {
+      "LoRA": {
+        "n": 18,
+        "feasible": 6,
+        "violation_totals": {
+          "precedence_violations": 14,
+          "routing_order_violations": 45,
+          "timing_consistency_violations": 38,
+          "machine_capacity_violations": 177,
+          "missing_op_count": 78
+        },
+        "violation_instance_counts": {
+          "precedence_violations": 3,
+          "routing_order_violations": 8,
+          "timing_consistency_violations": 3,
+          "machine_capacity_violations": 4,
+          "missing_op_count": 7
+        },
+        "by_family": {
+          "FT": {
+            "n": 3,
+            "feasible": 1,
+            "violation_totals": {
+              "precedence_violations": 0,
+              "routing_order_violations": 5,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 2,
+              "missing_op_count": 25
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 0,
+              "routing_order_violations": 2,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 1,
+              "missing_op_count": 2
+            }
+          },
+          "LA": {
+            "n": 15,
+            "feasible": 5,
+            "violation_totals": {
+              "precedence_violations": 14,
+              "routing_order_violations": 40,
+              "timing_consistency_violations": 38,
+              "machine_capacity_violations": 175,
+              "missing_op_count": 53
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 3,
+              "routing_order_violations": 6,
+              "timing_consistency_violations": 3,
+              "machine_capacity_violations": 3,
+              "missing_op_count": 5
+            }
+          }
+        },
+        "by_shape": {
+          "6x6": {
+            "n": 1,
+            "feasible": 1,
+            "violation_totals": {
+              "precedence_violations": 0,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 0
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 0,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 0
+            }
+          },
+          "10x10": {
+            "n": 6,
+            "feasible": 0,
+            "violation_totals": {
+              "precedence_violations": 14,
+              "routing_order_violations": 43,
+              "timing_consistency_violations": 38,
+              "machine_capacity_violations": 175,
+              "missing_op_count": 1
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 3,
+              "routing_order_violations": 6,
+              "timing_consistency_violations": 3,
+              "machine_capacity_violations": 3,
+              "missing_op_count": 1
+            }
+          },
+          "20x5": {
+            "n": 1,
+            "feasible": 0,
+            "violation_totals": {
+              "precedence_violations": 0,
+              "routing_order_violations": 1,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 2,
+              "missing_op_count": 24
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 0,
+              "routing_order_violations": 1,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 1,
+              "missing_op_count": 1
+            }
+          },
+          "10x5": {
+            "n": 5,
+            "feasible": 5,
+            "violation_totals": {
+              "precedence_violations": 0,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 0
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 0,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 0
+            }
+          },
+          "15x5": {
+            "n": 5,
+            "feasible": 0,
+            "violation_totals": {
+              "precedence_violations": 0,
+              "routing_order_violations": 1,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 53
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 0,
+              "routing_order_violations": 1,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 5
+            }
+          }
+        }
+      },
+      "rsLoRA": {
+        "n": 18,
+        "feasible": 6,
+        "violation_totals": {
+          "precedence_violations": 18,
+          "routing_order_violations": 169,
+          "timing_consistency_violations": 345,
+          "machine_capacity_violations": 527,
+          "missing_op_count": 183
+        },
+        "violation_instance_counts": {
+          "precedence_violations": 7,
+          "routing_order_violations": 12,
+          "timing_consistency_violations": 6,
+          "machine_capacity_violations": 6,
+          "missing_op_count": 6
+        },
+        "by_family": {
+          "FT": {
+            "n": 3,
+            "feasible": 1,
+            "violation_totals": {
+              "precedence_violations": 1,
+              "routing_order_violations": 18,
+              "timing_consistency_violations": 71,
+              "machine_capacity_violations": 87,
+              "missing_op_count": 50
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 1,
+              "routing_order_violations": 2,
+              "timing_consistency_violations": 1,
+              "machine_capacity_violations": 1,
+              "missing_op_count": 1
+            }
+          },
+          "LA": {
+            "n": 15,
+            "feasible": 5,
+            "violation_totals": {
+              "precedence_violations": 17,
+              "routing_order_violations": 151,
+              "timing_consistency_violations": 274,
+              "machine_capacity_violations": 440,
+              "missing_op_count": 133
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 6,
+              "routing_order_violations": 10,
+              "timing_consistency_violations": 5,
+              "machine_capacity_violations": 5,
+              "missing_op_count": 5
+            }
+          }
+        },
+        "by_shape": {
+          "6x6": {
+            "n": 1,
+            "feasible": 1,
+            "violation_totals": {
+              "precedence_violations": 0,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 0
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 0,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 0
+            }
+          },
+          "10x10": {
+            "n": 6,
+            "feasible": 0,
+            "violation_totals": {
+              "precedence_violations": 17,
+              "routing_order_violations": 144,
+              "timing_consistency_violations": 345,
+              "machine_capacity_violations": 527,
+              "missing_op_count": 0
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 6,
+              "routing_order_violations": 6,
+              "timing_consistency_violations": 6,
+              "machine_capacity_violations": 6,
+              "missing_op_count": 0
+            }
+          },
+          "20x5": {
+            "n": 1,
+            "feasible": 0,
+            "violation_totals": {
+              "precedence_violations": 0,
+              "routing_order_violations": 3,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 50
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 0,
+              "routing_order_violations": 1,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 1
+            }
+          },
+          "10x5": {
+            "n": 5,
+            "feasible": 5,
+            "violation_totals": {
+              "precedence_violations": 0,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 0
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 0,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 0
+            }
+          },
+          "15x5": {
+            "n": 5,
+            "feasible": 0,
+            "violation_totals": {
+              "precedence_violations": 1,
+              "routing_order_violations": 22,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 133
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 1,
+              "routing_order_violations": 5,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 5
+            }
+          }
+        }
+      }
+    },
+    "qwen2": {
+      "LoRA": {
+        "n": 18,
+        "feasible": 0,
+        "violation_totals": {
+          "precedence_violations": 133,
+          "routing_order_violations": 818,
+          "timing_consistency_violations": 714,
+          "machine_capacity_violations": 377,
+          "missing_op_count": 163
+        },
+        "violation_instance_counts": {
+          "precedence_violations": 16,
+          "routing_order_violations": 18,
+          "timing_consistency_violations": 18,
+          "machine_capacity_violations": 17,
+          "missing_op_count": 13
+        },
+        "by_family": {
+          "FT": {
+            "n": 3,
+            "feasible": 0,
+            "violation_totals": {
+              "precedence_violations": 17,
+              "routing_order_violations": 144,
+              "timing_consistency_violations": 64,
+              "machine_capacity_violations": 25,
+              "missing_op_count": 34
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 3,
+              "routing_order_violations": 3,
+              "timing_consistency_violations": 3,
+              "machine_capacity_violations": 3,
+              "missing_op_count": 3
+            }
+          },
+          "LA": {
+            "n": 15,
+            "feasible": 0,
+            "violation_totals": {
+              "precedence_violations": 116,
+              "routing_order_violations": 674,
+              "timing_consistency_violations": 650,
+              "machine_capacity_violations": 352,
+              "missing_op_count": 129
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 13,
+              "routing_order_violations": 15,
+              "timing_consistency_violations": 15,
+              "machine_capacity_violations": 14,
+              "missing_op_count": 10
+            }
+          }
+        },
+        "by_shape": {
+          "6x6": {
+            "n": 1,
+            "feasible": 0,
+            "violation_totals": {
+              "precedence_violations": 4,
+              "routing_order_violations": 19,
+              "timing_consistency_violations": 7,
+              "machine_capacity_violations": 1,
+              "missing_op_count": 6
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 1,
+              "routing_order_violations": 1,
+              "timing_consistency_violations": 1,
+              "machine_capacity_violations": 1,
+              "missing_op_count": 1
+            }
+          },
+          "10x10": {
+            "n": 6,
+            "feasible": 0,
+            "violation_totals": {
+              "precedence_violations": 101,
+              "routing_order_violations": 445,
+              "timing_consistency_violations": 485,
+              "machine_capacity_violations": 285,
+              "missing_op_count": 2
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 6,
+              "routing_order_violations": 6,
+              "timing_consistency_violations": 6,
+              "machine_capacity_violations": 6,
+              "missing_op_count": 1
+            }
+          },
+          "20x5": {
+            "n": 1,
+            "feasible": 0,
+            "violation_totals": {
+              "precedence_violations": 2,
+              "routing_order_violations": 47,
+              "timing_consistency_violations": 30,
+              "machine_capacity_violations": 4,
+              "missing_op_count": 26
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 1,
+              "routing_order_violations": 1,
+              "timing_consistency_violations": 1,
+              "machine_capacity_violations": 1,
+              "missing_op_count": 1
+            }
+          },
+          "10x5": {
+            "n": 5,
+            "feasible": 0,
+            "violation_totals": {
+              "precedence_violations": 8,
+              "routing_order_violations": 118,
+              "timing_consistency_violations": 53,
+              "machine_capacity_violations": 11,
+              "missing_op_count": 69
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 3,
+              "routing_order_violations": 5,
+              "timing_consistency_violations": 5,
+              "machine_capacity_violations": 4,
+              "missing_op_count": 5
+            }
+          },
+          "15x5": {
+            "n": 5,
+            "feasible": 0,
+            "violation_totals": {
+              "precedence_violations": 18,
+              "routing_order_violations": 189,
+              "timing_consistency_violations": 139,
+              "machine_capacity_violations": 76,
+              "missing_op_count": 60
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 5,
+              "routing_order_violations": 5,
+              "timing_consistency_violations": 5,
+              "machine_capacity_violations": 5,
+              "missing_op_count": 5
+            }
+          }
+        }
+      },
+      "rsLoRA": {
+        "n": 18,
+        "feasible": 1,
+        "violation_totals": {
+          "precedence_violations": 98,
+          "routing_order_violations": 320,
+          "timing_consistency_violations": 292,
+          "machine_capacity_violations": 229,
+          "missing_op_count": 250
+        },
+        "violation_instance_counts": {
+          "precedence_violations": 14,
+          "routing_order_violations": 16,
+          "timing_consistency_violations": 17,
+          "machine_capacity_violations": 10,
+          "missing_op_count": 12
+        },
+        "by_family": {
+          "FT": {
+            "n": 3,
+            "feasible": 1,
+            "violation_totals": {
+              "precedence_violations": 15,
+              "routing_order_violations": 65,
+              "timing_consistency_violations": 42,
+              "machine_capacity_violations": 48,
+              "missing_op_count": 55
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 2,
+              "routing_order_violations": 2,
+              "timing_consistency_violations": 2,
+              "machine_capacity_violations": 1,
+              "missing_op_count": 1
+            }
+          },
+          "LA": {
+            "n": 15,
+            "feasible": 0,
+            "violation_totals": {
+              "precedence_violations": 83,
+              "routing_order_violations": 255,
+              "timing_consistency_violations": 250,
+              "machine_capacity_violations": 181,
+              "missing_op_count": 195
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 12,
+              "routing_order_violations": 14,
+              "timing_consistency_violations": 15,
+              "machine_capacity_violations": 9,
+              "missing_op_count": 11
+            }
+          }
+        },
+        "by_shape": {
+          "6x6": {
+            "n": 1,
+            "feasible": 1,
+            "violation_totals": {
+              "precedence_violations": 0,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 0
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 0,
+              "routing_order_violations": 0,
+              "timing_consistency_violations": 0,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 0
+            }
+          },
+          "10x10": {
+            "n": 6,
+            "feasible": 0,
+            "violation_totals": {
+              "precedence_violations": 85,
+              "routing_order_violations": 256,
+              "timing_consistency_violations": 247,
+              "machine_capacity_violations": 223,
+              "missing_op_count": 1
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 6,
+              "routing_order_violations": 6,
+              "timing_consistency_violations": 6,
+              "machine_capacity_violations": 6,
+              "missing_op_count": 1
+            }
+          },
+          "20x5": {
+            "n": 1,
+            "feasible": 0,
+            "violation_totals": {
+              "precedence_violations": 1,
+              "routing_order_violations": 11,
+              "timing_consistency_violations": 4,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 55
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 1,
+              "routing_order_violations": 1,
+              "timing_consistency_violations": 1,
+              "machine_capacity_violations": 0,
+              "missing_op_count": 1
+            }
+          },
+          "10x5": {
+            "n": 5,
+            "feasible": 0,
+            "violation_totals": {
+              "precedence_violations": 4,
+              "routing_order_violations": 13,
+              "timing_consistency_violations": 21,
+              "machine_capacity_violations": 1,
+              "missing_op_count": 26
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 3,
+              "routing_order_violations": 4,
+              "timing_consistency_violations": 5,
+              "machine_capacity_violations": 1,
+              "missing_op_count": 5
+            }
+          },
+          "15x5": {
+            "n": 5,
+            "feasible": 0,
+            "violation_totals": {
+              "precedence_violations": 8,
+              "routing_order_violations": 40,
+              "timing_consistency_violations": 20,
+              "machine_capacity_violations": 5,
+              "missing_op_count": 168
+            },
+            "violation_instance_counts": {
+              "precedence_violations": 4,
+              "routing_order_violations": 5,
+              "timing_consistency_violations": 5,
+              "machine_capacity_violations": 3,
+              "missing_op_count": 5
+            }
+          }
+        }
+      }
+    }
+  }
+}

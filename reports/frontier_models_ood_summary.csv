@@ -1,0 +1,7 @@
+model,overall_feas,overall_feas_rate,known_feas,known_feas_rate,unknown_feas,unknown_feas_rate,mean_gap_feasible_only,mean_gap_infeasible_as_zero
+GPT-4o-mini,0/18,0.0,0/12,0.0,0/6,0.0,0,0.0
+GPT-4o,0/18,0.0,0/12,0.0,0/6,0.0,0,0.0
+GPT-5 minimal,1/18,0.0556,1/12,0.0833,0/6,0.0,449.35,24.96
+o3-mini medium,5/18,0.2778,2/12,0.1667,3/6,0.5,243.34,67.59
+o3-mini high,2/18,0.1111,1/12,0.0833,1/6,0.1667,0.0,0.0
+o3 medium,13/18,0.7222,9/12,0.75,4/6,0.6667,234.95,169.69

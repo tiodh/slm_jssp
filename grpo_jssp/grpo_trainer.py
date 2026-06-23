@@ -30,6 +30,9 @@ from grpo_jssp.constraint_checker import check_violations
 from grpo_jssp.reward import compute_reward
 
 
+_TOKENIZER_REF = {"tok": None}  # set by train() before reward_fn runs
+
+
 def _serialize_jobs(jobs_spec):
     """jobs_spec is list[list[tuple[int,int]]]; tuples don't survive HF Dataset
     cleanly, so we serialize to JSON string and parse back inside reward_fn."""
@@ -40,7 +43,23 @@ def _deserialize_jobs(s):
     return [[tuple(op) for op in job] for job in json.loads(s)]
 
 
-def make_reward_fn(mode: str):
+def _gen_len_and_eos(text: str):
+    """For V2: token length and EOS flag of one completion. Uses the tokenizer
+    captured into _TOKENIZER_REF by train(). Falls back to a char/4 estimate if
+    the tokenizer isn't set (e.g. unit tests)."""
+    tok = _TOKENIZER_REF.get("tok")
+    if tok is None:
+        return max(1, len(text) // 4), text.rstrip().endswith("<|eot_id|>") or text.endswith(tok.eos_token if tok else "")
+    ids = tok.encode(text, add_special_tokens=False)
+    gen_len = len(ids)
+    eos_id = tok.eos_token_id
+    ended_with_eos = (eos_id is not None) and (len(ids) > 0) and (ids[-1] == eos_id)
+    return gen_len, ended_with_eos
+
+
+def make_reward_fn(mode: str, lp_alpha: float = 0.10, eos_beta: float = 0.05):
+    needs_len = (mode == "stratified_v2")
+
     def reward_fn(completions, jobs_spec, bks, n_ops, **kwargs):
         rewards = []
         n_parseable = 0
@@ -50,7 +69,13 @@ def make_reward_fn(mode: str):
             js = _deserialize_jobs(js_json)
             v = check_violations(text, js)
             bks_val = None if b in (0, None) else int(b)
-            r = compute_reward(v, int(n), bks_val, mode=mode)
+            if needs_len:
+                gen_len, ended_with_eos = _gen_len_and_eos(text)
+                r = compute_reward(v, int(n), bks_val, mode=mode,
+                                   gen_len=gen_len, ended_with_eos=ended_with_eos,
+                                   lp_alpha=lp_alpha, eos_beta=eos_beta)
+            else:
+                r = compute_reward(v, int(n), bks_val, mode=mode)
             rewards.append(float(r))
             if (v["ops_emitted"] + v["timing_consistency_violations"]) > 0:
                 n_parseable += 1
@@ -112,18 +137,38 @@ def train(reward_mode: str = REWARD_MODE,
           max_records: int | None = None,
           run_name: str | None = None,
           max_steps: int = NUM_TRAIN_STEPS,
-          length_control: bool = False):
+          length_control: bool = False,
+          resume_from: str | None = None,
+          sft_checkpoint: str | None = None,
+          kl_coef: float | None = None,
+          grad_accum: int | None = None,
+          temperature: float | None = None,
+          learning_rate: float | None = None,
+          lp_alpha: float = 0.10,
+          eos_beta: float = 0.05,
+          save_every: int | None = None):
+    sft_ckpt = sft_checkpoint or str(SFT_CHECKPOINT)
+    kl = KL_COEF if kl_coef is None else kl_coef
+    ga = GRAD_ACCUM_STEPS if grad_accum is None else grad_accum
+    temp = TEMPERATURE if temperature is None else temperature
+    lr = LEARNING_RATE if learning_rate is None else learning_rate
+    save = SAVE_EVERY if save_every is None else save_every
+
     print(f"[grpo] reward_mode={reward_mode}, K={K_SAMPLES}, steps={max_steps}, "
-          f"length_control={length_control}")
+          f"length_control={length_control}, resume_from={resume_from}")
+    print(f"[grpo] sft_ckpt={sft_ckpt}")
+    print(f"[grpo] overrides: KL={kl}, grad_accum={ga}, T={temp}, LR={lr}, "
+          f"lp_alpha={lp_alpha}, eos_beta={eos_beta}, save_every={save}")
 
     model, tokenizer = FastLanguageModel.from_pretrained(
-        model_name=str(SFT_CHECKPOINT),
+        model_name=sft_ckpt,
         max_seq_length=MAX_SEQ_LENGTH,
         load_in_4bit=True,
         dtype=None,
     )
     # adapter is loaded from SFT_CHECKPOINT; switch to training mode
     model.train()
+    _TOKENIZER_REF["tok"] = tokenizer  # for V2 reward length/EOS measurement
 
     # GRPO trains on the 98% train split; the 2% test split is held out for eval.
     records = load_starjob_sm(STARJOB_SM_PATH, limit=max_records, split="train")
@@ -139,18 +184,18 @@ def train(reward_mode: str = REWARD_MODE,
     config = GRPOConfig(
         output_dir=str(run_dir),
         run_name=run_name,
-        learning_rate=LEARNING_RATE,
+        learning_rate=lr,
         warmup_steps=WARMUP_STEPS,
         max_steps=max_steps,
         per_device_train_batch_size=K_SAMPLES,
-        gradient_accumulation_steps=GRAD_ACCUM_STEPS,
+        gradient_accumulation_steps=ga,
         num_generations=K_SAMPLES,
         max_prompt_length=MAX_SEQ_LENGTH - MAX_NEW_TOKENS,
         max_completion_length=MAX_NEW_TOKENS,
-        temperature=TEMPERATURE,
-        beta=KL_COEF,
+        temperature=temp,
+        beta=kl,
         max_grad_norm=MAX_GRAD_NORM,
-        save_steps=SAVE_EVERY,
+        save_steps=save,
         save_strategy="steps",
         logging_steps=LOGGING_STEPS,
         report_to=["wandb"],
@@ -165,12 +210,16 @@ def train(reward_mode: str = REWARD_MODE,
     trainer_cls = LengthControlledGRPOTrainer if length_control else GRPOTrainer
     trainer = trainer_cls(
         model=model,
-        reward_funcs=[make_reward_fn(reward_mode)],
+        reward_funcs=[make_reward_fn(reward_mode, lp_alpha=lp_alpha, eos_beta=eos_beta)],
         args=config,
         train_dataset=train_ds,
         processing_class=tokenizer,
     )
-    trainer.train()
+    if resume_from:
+        print(f"[grpo] resuming from checkpoint: {resume_from}")
+        trainer.train(resume_from_checkpoint=resume_from)
+    else:
+        trainer.train()
     final_dir = run_dir / "final_adapter"
     trainer.save_model(str(final_dir))
     print(f"[grpo] saved final adapter -> {final_dir}")

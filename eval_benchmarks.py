@@ -9,6 +9,11 @@ import time
 import argparse
 import torch
 from unsloth import FastLanguageModel
+from feasibility import (
+    extract_makespan,
+    parse_schedule_ops_strict,
+    validate_feasibility,
+)
 
 sys.stdout.reconfigure(line_buffering=True)
 
@@ -111,74 +116,6 @@ def to_starjob_format(n, m, jobs):
         parts.append(" ".join(f"M{mi}:{du}" for mi, du in ops) + " ")
     return instruction, "\n".join(parts) + "\n"
 
-def extract_makespan(text):
-    times = re.findall(r'->\s*(\d+)', text)
-    if not times:
-        return None
-    return max(int(t) for t in times)
-
-def parse_schedule_ops(text):
-    """Return list of (job, machine, start, dur, end) from generated schedule."""
-    pat = re.compile(r'J(\d+)-M(\d+):\s*(\d+)\s*\+\s*(\d+)\s*->\s*(\d+)')
-    ops = []
-    for m in pat.finditer(text):
-        j, mc, s, d, e = map(int, m.groups())
-        if s + d == e:
-            ops.append((j, mc, s, d, e))
-    return ops
-
-def validate_feasibility(ops, jobs):
-    """Check (a) each job's operations match its routing in order with correct
-    durations, (b) no overlap on any machine. Returns (feasible: bool, info: dict)."""
-    n = len(jobs)
-    # Group ops by job, sort by start time
-    by_job = {j: [] for j in range(n)}
-    for o in ops:
-        if o[0] < n:
-            by_job[o[0]].append(o)
-
-    routing_violations = 0
-    machine_violations = 0
-    missing_ops = 0
-    coverage = 0
-
-    for j, ops_j in by_job.items():
-        ops_j.sort(key=lambda x: x[2])  # by start
-        expected = jobs[j]              # [(machine, dur), ...]
-        if len(ops_j) < len(expected):
-            missing_ops += len(expected) - len(ops_j)
-        # Check routing: i-th op should be on expected[i] machine with right dur
-        last_end = 0
-        for i, op in enumerate(ops_j[:len(expected)]):
-            mc, du = expected[i]
-            if op[1] != mc or op[3] != du:
-                routing_violations += 1
-            if op[2] < last_end:
-                routing_violations += 1
-            last_end = op[4]
-            coverage += 1
-
-    # Machine overlap check
-    by_mc = {}
-    for o in ops:
-        by_mc.setdefault(o[1], []).append(o)
-    for mc, lst in by_mc.items():
-        lst.sort(key=lambda x: x[2])
-        for i in range(1, len(lst)):
-            if lst[i][2] < lst[i-1][4]:
-                machine_violations += 1
-
-    total_expected = sum(len(j) for j in jobs)
-    feasible = (routing_violations == 0 and machine_violations == 0
-                and missing_ops == 0)
-    return feasible, {
-        "ops_emitted": len(ops),
-        "ops_expected": total_expected,
-        "missing_ops": missing_ops,
-        "routing_violations": routing_violations,
-        "machine_violations": machine_violations,
-    }
-
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", required=True, choices=list(MODELS.keys()))
@@ -239,28 +176,32 @@ def main():
         dt = time.time() - t0
         gen = tokenizer.decode(out_ids[0][in_len:], skip_special_tokens=True)
         pred = extract_makespan(gen)
-        ops = parse_schedule_ops(gen)
-        feas, info = validate_feasibility(ops, jobs)
+        ops, timing_bad = parse_schedule_ops_strict(gen)
+        feas, info = validate_feasibility(ops, jobs, timing_bad)
         gap = (pred - bk) / bk * 100 if (pred is not None and bk) else None
 
         rec = {"name": name, "size": f"{n}x{m}", "best_known": bk,
                "pred": pred, "gap_pct": gap, "feasible": feas,
                "input_tokens": in_len,
                "gen_tokens": int(out_ids.shape[1] - in_len),
-               "time_s": round(dt, 1), **info}
+               "time_s": round(dt, 1),
+               "raw_output": gen,
+               **info}
         results.append(rec)
 
-        gap_s = f"gap={gap:+.1f}%" if gap is not None else "gap=TIDAK-DAPAT-DIPARSING"
+        gap_s = f"gap={gap:+.1f}%" if gap is not None else "gap=UNPARSEABLE"
         if feas:
-            feas_s = "status=LAYAK"
+            feas_s = "status=FEASIBLE"
         else:
-            feas_s = (f"status=TIDAK-LAYAK ["
-                      f"pelanggaran_routing={info['routing_violations']}, "
-                      f"tabrakan_mesin={info['machine_violations']}, "
-                      f"operasi_hilang={info['missing_ops']}]")
-        print(f"  [{i:2d}/{len(selected)}] {name} ukuran={n}x{m} | "
-              f"best_known={bk} prediksi={pred} | {gap_s} | {feas_s} | "
-              f"waktu={dt:.1f}detik")
+            feas_s = (f"status=INFEASIBLE ["
+                      f"prec={info['precedence_violations']}, "
+                      f"route={info['routing_order_violations']}, "
+                      f"timing={info['timing_consistency_violations']}, "
+                      f"mcap={info['machine_capacity_violations']}, "
+                      f"miss={info['missing_op_count']}]")
+        print(f"  [{i:2d}/{len(selected)}] {name} size={n}x{m} | "
+              f"bk={bk} pred={pred} | {gap_s} | {feas_s} | "
+              f"time={dt:.1f}s")
 
     total = time.time() - t_start
     print(f"\nTotal eval time: {total/60:.1f} min")
@@ -269,24 +210,43 @@ def main():
     for r in results:
         families[r["name"][:2]].append(r)
 
+    viol_keys = [
+        "precedence_violations",
+        "routing_order_violations",
+        "timing_consistency_violations",
+        "machine_capacity_violations",
+        "missing_op_count",
+    ]
+
+    def viol_totals(recs):
+        return {k: sum(r.get(k, 0) for r in recs) for k in viol_keys}
+
+    def viol_instance_counts(recs):
+        return {k: sum(1 for r in recs if r.get(k, 0) > 0) for k in viol_keys}
+
     summary = {"model": args.model, "total_time_min": round(total/60, 2),
                "max_new_tokens": MAX_NEW_TOKENS, "by_family": {}, "results": results}
+    summary["overall_violation_totals"] = viol_totals(results)
+    summary["overall_violation_instance_counts"] = viol_instance_counts(results)
     for fam, recs in families.items():
         valid = [r for r in recs if r["pred"] is not None]
         feas_recs = [r for r in valid if r["feasible"]]
-        if not valid:
+        if not recs:
             continue
-        all_gaps = [r["gap_pct"] for r in valid]
-        feas_gaps = [r["gap_pct"] for r in feas_recs]
         d = {
             "n": len(recs),
             "valid_parse": len(valid),
             "feasible": len(feas_recs),
-            "exact_match_feasible": sum(1 for r in feas_recs if r["pred"] == r["best_known"]),
-            "all_mean_gap_pct": round(sum(all_gaps)/len(all_gaps), 2),
-            "all_median_gap_pct": round(sorted(all_gaps)[len(all_gaps)//2], 2),
+            "violation_totals": viol_totals(recs),
+            "violation_instance_counts": viol_instance_counts(recs),
         }
-        if feas_gaps:
+        if valid:
+            all_gaps = [r["gap_pct"] for r in valid]
+            d["exact_match_feasible"] = sum(1 for r in feas_recs if r["pred"] == r["best_known"])
+            d["all_mean_gap_pct"] = round(sum(all_gaps)/len(all_gaps), 2)
+            d["all_median_gap_pct"] = round(sorted(all_gaps)[len(all_gaps)//2], 2)
+        if feas_recs:
+            feas_gaps = [r["gap_pct"] for r in feas_recs]
             d["feas_mean_gap_pct"] = round(sum(feas_gaps)/len(feas_gaps), 2)
             d["feas_median_gap_pct"] = round(sorted(feas_gaps)[len(feas_gaps)//2], 2)
         summary["by_family"][fam.upper()] = d

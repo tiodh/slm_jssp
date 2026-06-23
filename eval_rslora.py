@@ -11,6 +11,11 @@ import time
 import statistics
 import torch
 from unsloth import FastLanguageModel
+from feasibility import (
+    extract_makespan,
+    parse_schedule_ops_strict,
+    validate_feasibility,
+)
 
 sys.stdout.reconfigure(line_buffering=True)
 
@@ -46,14 +51,6 @@ alpaca_prompt = """Below is an instruction that describes a task, paired with an
     """
 
 
-def extract_makespan(text):
-    """Extract makespan (max end time) from schedule output."""
-    times = re.findall(r'->\s*(\d+)', text)
-    if not times:
-        return None
-    return max(int(t) for t in times)
-
-
 def extract_size(instruction):
     """Extract (jobs, machines) from instruction text."""
     m = re.search(r'(\d+)\s*Jobs.*?(\d+)\s*Machines', instruction)
@@ -82,65 +79,6 @@ def parse_input_jobs(input_text):
     if current_ops:
         jobs.append(current_ops)
     return jobs
-
-
-def parse_schedule_ops(text):
-    """Parse generated schedule into list of (job, machine, start, duration, end)."""
-    pat = re.compile(r'J(\d+)-M(\d+):\s*(\d+)\s*\+\s*(\d+)\s*->\s*(\d+)')
-    ops = []
-    for m in pat.finditer(text):
-        j, mc, s, d, e = map(int, m.groups())
-        if s + d == e:
-            ops.append((j, mc, s, d, e))
-    return ops
-
-
-def validate_feasibility(ops, jobs):
-    """Check routing order, durations, and no machine overlap.
-    Returns (feasible, info_dict)."""
-    n = len(jobs)
-    by_job = {j: [] for j in range(n)}
-    for o in ops:
-        if o[0] < n:
-            by_job[o[0]].append(o)
-
-    routing_violations = 0
-    machine_violations = 0
-    missing_ops = 0
-
-    for j, ops_j in by_job.items():
-        ops_j.sort(key=lambda x: x[2])
-        expected = jobs[j]
-        if len(ops_j) < len(expected):
-            missing_ops += len(expected) - len(ops_j)
-        last_end = 0
-        for i, op in enumerate(ops_j[:len(expected)]):
-            mc, du = expected[i]
-            if op[1] != mc or op[3] != du:
-                routing_violations += 1
-            if op[2] < last_end:
-                routing_violations += 1
-            last_end = op[4]
-
-    # Machine overlap
-    by_mc = {}
-    for o in ops:
-        by_mc.setdefault(o[1], []).append(o)
-    for mc, lst in by_mc.items():
-        lst.sort(key=lambda x: x[2])
-        for i in range(1, len(lst)):
-            if lst[i][2] < lst[i - 1][4]:
-                machine_violations += 1
-
-    total_expected = sum(len(j) for j in jobs)
-    feasible = (routing_violations == 0 and machine_violations == 0 and missing_ops == 0)
-    return feasible, {
-        "ops_emitted": len(ops),
-        "ops_expected": total_expected,
-        "missing_ops": missing_ops,
-        "routing_violations": routing_violations,
-        "machine_violations": machine_violations,
-    }
 
 
 def find_best_checkpoint(output_dir):
@@ -260,15 +198,17 @@ def main():
         generated = tokenizer.decode(output_ids[0][inputs.input_ids.shape[1]:],
                                      skip_special_tokens=True)
         pred_makespan = extract_makespan(generated)
-        pred_ops = parse_schedule_ops(generated)
+        pred_ops, timing_bad = parse_schedule_ops_strict(generated)
 
-        # Feasibility check
         if jobs:
-            feasible, feas_info = validate_feasibility(pred_ops, jobs)
+            feasible, feas_info = validate_feasibility(pred_ops, jobs, timing_bad)
         else:
-            feasible, feas_info = False, {"ops_emitted": 0, "ops_expected": 0,
-                                          "missing_ops": 0, "routing_violations": 0,
-                                          "machine_violations": 0}
+            feasible, feas_info = False, {
+                "ops_emitted": 0, "ops_expected": 0, "extra_ops": 0,
+                "precedence_violations": 0, "routing_order_violations": 0,
+                "timing_consistency_violations": 0,
+                "machine_capacity_violations": 0, "missing_op_count": 0,
+            }
 
         rec = {
             "idx": i + 1,
@@ -280,6 +220,7 @@ def main():
             "feasible": feasible,
             "gen_tokens": n_gen_tokens,
             "time_s": round(dt, 1),
+            "raw_output": generated,
             **feas_info,
         }
 
@@ -292,9 +233,11 @@ def main():
                 status = "FEASIBLE+EXACT" if rec["exact_makespan"] else f"FEASIBLE gap={gap_pct:+.1f}%"
             else:
                 status = (f"INFEASIBLE gap={gap_pct:+.1f}% "
-                          f"[route={feas_info['routing_violations']}, "
-                          f"machine={feas_info['machine_violations']}, "
-                          f"missing={feas_info['missing_ops']}]")
+                          f"[prec={feas_info['precedence_violations']}, "
+                          f"route={feas_info['routing_order_violations']}, "
+                          f"timing={feas_info['timing_consistency_violations']}, "
+                          f"mcap={feas_info['machine_capacity_violations']}, "
+                          f"miss={feas_info['missing_op_count']}]")
             print(f"  [{i+1}/{len(samples)}] {size_str} | True={true_makespan} Pred={pred_makespan} | {status}")
         else:
             rec["gap_pct"] = None
@@ -368,7 +311,20 @@ def main():
         print(f"{size_str:<8} {len(grp):>4} {exact:>6} {feas:>6} {feas_exact:>8} "
               f"{statistics.mean(grp_gaps):>8.2f}% {min(grp_gaps):>7.2f}% {max(grp_gaps):>7.2f}%")
 
-    # Save JSON
+    viol_keys = [
+        "precedence_violations",
+        "routing_order_violations",
+        "timing_consistency_violations",
+        "machine_capacity_violations",
+        "missing_op_count",
+    ]
+
+    def viol_totals(recs):
+        return {k: sum(r.get(k, 0) for r in recs) for k in viol_keys}
+
+    def viol_instance_counts(recs):
+        return {k: sum(1 for r in recs if r.get(k, 0) > 0) for k in viol_keys}
+
     output = {
         "model": args.model,
         "method": "rsLoRA",
@@ -383,6 +339,8 @@ def main():
             "feasible_exact": sum(1 for r in feasible_results if r["exact_makespan"]) if feasible_results else 0,
             "mean_gap_pct": round(statistics.mean([r["gap_pct"] for r in valid]), 2) if valid else None,
             "median_gap_pct": round(statistics.median([r["gap_pct"] for r in valid]), 2) if valid else None,
+            "violation_totals": viol_totals(results),
+            "violation_instance_counts": viol_instance_counts(results),
         },
         "by_size": [],
         "results": results,
@@ -400,6 +358,8 @@ def main():
             "mean_gap_pct": round(statistics.mean(grp_gaps), 2),
             "min_gap_pct": round(min(grp_gaps), 2),
             "max_gap_pct": round(max(grp_gaps), 2),
+            "violation_totals": viol_totals(grp),
+            "violation_instance_counts": viol_instance_counts(grp),
         })
 
     out_path = f"metrics_rslora_{args.model}.json"
