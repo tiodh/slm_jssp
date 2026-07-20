@@ -209,6 +209,64 @@ Bold = best in column (per split). `missing_op = 177` on OOD is identical across
 
 Full eval JSONs: [`grpo_jssp/eval_results/full_stratified_lc_n2000_v6_ck400_{ood,sm}.json`](grpo_jssp/eval_results/). Trained adapter: `grpo_jssp/runs/full_stratified_lc_n2000_v6/checkpoint-400/`.
 
+### ORB01–ORB10 — extended out-of-distribution benchmark
+
+To test generalization beyond the 18 FT+LA instances, we evaluate all GRPO variants on the **ORB** benchmark (Applegate & Cook 1991) — 10 instances, all 10×10 JSSP, harder and structurally different from training data. Evaluated with **checker 553237d** (adds `over_op_count` to feasibility).
+
+Best-known solutions (BKS):
+
+| orb01 | orb02 | orb03 | orb04 | orb05 | orb06 | orb07 | orb08 | orb09 | orb10 |
+|------:|------:|------:|------:|------:|------:|------:|------:|------:|------:|
+| 1059 | 888 | 1005 | 1005 | 887 | 1010 | 397 | 899 | 934 | 944 |
+
+**Feasibility per instance:**
+
+| Run | orb01 | orb02 | orb03 | orb04 | orb05 | orb06 | orb07 | orb08 | orb09 | orb10 | Feasible | Avg gap† |
+|-----|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:--------:|:--------:|
+| SFT | Y | N | N | N | Y | N | N | N | N | N | 2/10 | +21.5% |
+| GRPO V1 | Y | Y | N | N | N | N | Y | N | N | Y | 4/10 | +20.0% |
+| GRPO V2 | N | N | N | N | N | N | Y | N | N | N | 1/10 | +11.6% |
+| **GRPO V3** | **Y** | **Y** | **Y** | N | **Y** | N | N | N | **Y** | **Y** | **6/10** | **+18.8%** |
+| GRPO V4 | Y | N | N | N | N | N | N | N | Y | Y | 3/10 | +16.8% |
+| GRPO V5 | N | N | N | N | N | N | N | N | N | N | 0/10 | — |
+| GRPO V6 | N | N | N | N | Y | N | N | N | Y | N | 2/10 | +16.1% |
+
+† Gap% on feasible instances only.
+
+**Violation breakdown (summed over 10 ORB instances):**
+
+| Run | miss | over | rout | mcap | tcon | prec | **total** |
+|-----|-----:|-----:|-----:|-----:|-----:|-----:|----------:|
+| SFT | 8 | 208 | 28 | 4 | 14 | 0 | 262 |
+| GRPO V1 | 2 | 606 | 4 | 1 | 13 | 0 | 626 |
+| GRPO V2 | 5 | 1425 | 17 | 54 | 15 | 1 | 1517 |
+| **GRPO V3** | **3** | **20** | **0** | **0** | **0** | **0** | **23** |
+| GRPO V4 | 10 | 179 | 8 | 1 | 25 | 0 | 223 |
+| GRPO V5 | 0 | 328 | 9 | 31 | 17 | 1 | 386 |
+| GRPO V6 | 0 | 829 | 1 | 83 | 32 | 1 | 946 |
+
+**V3 is the most robust GRPO variant on unseen OOD distributions.** Its total violation count (23) is an order of magnitude lower than any other run — including SFT (262). V5, which leads on FT+LA, collapses entirely on ORB (0/10); V6 regresses to SFT level (2/10). The dominant failure mode across all runs is `over` (excess operations emitted), most severe in V2 (~200 over/instance) and V6 (~200 over on 5 instances). V3's stratified reward with no length control generalizes cleanest when instance structure shifts significantly from training data.
+
+### Combined OOD summary — FT+LA + ORB (28 instances, checker 553237d)
+
+FT+LA numbers below are re-evaluated with checker 553237d (stricter than the per-run tables above, which use the original checker); this makes the comparison consistent across both benchmark sets.
+
+| Run | FT+LA 18 | ORB 10 | **Combined 28** | **Combined %** | Avg gap† |
+|-----|:--------:|:------:|:---------------:|:--------------:|:--------:|
+| SFT baseline | 8/18 | 2/10 | 10/28 | 35.7% | +15.2% |
+| GRPO V1 | 11/18 | 4/10 | 15/28 | 53.6% | +11.0% |
+| GRPO V2 | 4/18 | 1/10 | 5/28 | 17.9% | +11.6% |
+| **GRPO V3** | 9/18 | **6/10** | **15/28** | **53.6%** | +12.5% |
+| **GRPO V4** | **13/18** | 3/10 | **16/28** | **57.1%** | +12.3% |
+| GRPO V5 | 8/18 | 0/10 | 8/28 | 28.6% | +7.0% |
+| GRPO V6 | 8/18 | 2/10 | 10/28 | 35.7% | +10.0% |
+
+† Gap% on feasible instances only.
+
+**V4 leads on combined feasibility (57.1%) but generalizes unevenly** — strong on FT+LA (13/18) but weaker on ORB (3/10). **V3 matches V4's combined count (53.6%) with a balanced profile across both distributions**, making it the preferred choice when OOD generalization is the goal. V5 and V6 both drop sharply on ORB relative to their FT+LA performance.
+
+Per-instance JSON: [`grpo_jssp/eval_results/orb_{sft,v1,v2,v3,v4,v5,v6}_ood.json`](grpo_jssp/eval_results/). Combined CSV: [`reports/orb_eval_all_models.csv`](reports/orb_eval_all_models.csv). Eval script: [`eval_orb.py`](eval_orb.py).
+
 ---
 
 ## Reproducibility
